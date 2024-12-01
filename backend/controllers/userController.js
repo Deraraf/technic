@@ -129,7 +129,9 @@ const getAllUsers = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error getting users", success: false });
+    res
+      .status(500)
+      .json({ message: "Error getting users", success: false, errors: error });
   }
 };
 

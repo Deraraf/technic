@@ -26,7 +26,6 @@ const Registor = () => {
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
-      console.log(redirect);
     }
   }, [userInfo, navigate, redirect]);
 
