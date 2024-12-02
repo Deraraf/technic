@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 const Registor = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { search } = useLocation();
@@ -34,12 +34,16 @@ const Registor = () => {
 
     try {
       const res = await register({
-        name,
+        username,
         email,
         password,
-      }).unwrap();
+      });
 
-      if (!res.success) return;
+      console.log(res);
+
+      if (res.error) {
+        return toast.error(res.error?.data?.message);
+      }
       dispatch(setUserInfo({ ...res }));
       console.log(res);
       navigate(redirect);
@@ -63,9 +67,9 @@ const Registor = () => {
         >
           <input
             type="text"
-            value={name}
-            placeholder="name"
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
             className="mb-4 p-2 w-[400px] mt-8 bg-transparent border border-white text-white rounded-xl  "
           />
           <input

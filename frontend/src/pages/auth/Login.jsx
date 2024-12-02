@@ -33,11 +33,20 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await login({ email, password }).unwrap();
-      if (!res.success) return;
-      dispatch(setUserInfo({ ...res }));
-      navigate(redirect);
-      toast.success("logged in successfully");
+      const res = await login({ email, password });
+      console.log(res);
+
+      if (res.error) {
+        return toast.error(res.error?.data?.message);
+      }
+
+      const { data } = res;
+      if (data?.success) {
+        dispatch(setUserInfo({ ...data }));
+        navigate(redirect);
+        return toast.success(data.message);
+      }
+      toast.error("Unexpected issue during login");
     } catch (error) {
       console.log(error);
     }
