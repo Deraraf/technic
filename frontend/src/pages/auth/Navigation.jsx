@@ -17,7 +17,7 @@ const Navigation = ({ closeSidebar }) => {
         Home
       </Link>
       <Link to="/request" className="hover:underline">
-        Submit Request
+        Request form
       </Link>
       {/* Add more links as needed */}
 
@@ -28,6 +28,11 @@ const Navigation = ({ closeSidebar }) => {
       >
         {userInfo?.isAdmin ? (
           <>
+            <li>
+              <Link to="/profile" className="hover:underline">
+                profile
+              </Link>
+            </li>
             <li>
               <Link to="/admin/userlist" className="hover:underline">
                 UsersList
