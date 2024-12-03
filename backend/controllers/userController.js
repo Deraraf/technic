@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import createToken from "../utils/createToken.js";
 import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
+import Jwt from "jsonwebtoken";
 
 const createUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -103,19 +105,23 @@ const getCurrentUserProfile = async (req, res) => {
 };
 const updateUserProfile = async (req, res) => {
   const { username, email, password } = req.body;
+
   try {
+    if (!username && !email && !password) {
+      return res.status(400).json({ message: "Please fill all the inputs." });
+    }
     const user = await User.findById(req.user._id);
     if (user) {
       if (username) {
-        user.username = username || user.username;
+        user.username = username;
       }
       if (email) {
-        user.email = email || user.email;
+        user.email = email;
       }
       if (password) {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        user.password = hashedPassword || user.password;
+        user.password = hashedPassword;
       }
       await user.save();
       return res.status(200).json({
@@ -210,6 +216,59 @@ const updateUserById = async (req, res) => {
   return res.status(404).json({ message: "User not found" });
 };
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "user not found", success: false });
+    }
+
+    const token = Jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "youremail@gmail.com",
+        pass: "yourpassword",
+      },
+    });
+
+    const mailOptions = {
+      from: "youremail@gmail.com",
+      to: "myfriend@yahoo.com",
+      subject: "Reset your password",
+      text: `http://localhost:5173/reset-password/${user._id}/${token}`,
+    };
+
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.error(error);
+        return res
+          .status(500)
+          .json({
+            message: "Error sending password reset link",
+            success: false,
+          });
+      } else {
+        return res.status(200).json({
+          message: "Password reset link sent successfully",
+          success: true,
+        });
+      }
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error sending password reset link", success: false });
+  }
+};
+
 export {
   createUser,
   getAllUsers,
@@ -220,4 +279,5 @@ export {
   deleteUserById,
   getUserById,
   updateUserById,
+  forgotPassword,
 };

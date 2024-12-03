@@ -9,6 +9,7 @@ import {
   deleteUserById,
   getUserById,
   updateUserById,
+  forgotPassword,
 } from "../controllers/userController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
@@ -21,6 +22,7 @@ router
 
 router.post("/auth", loginUser);
 router.post("/logout", logoutUser);
+router.post("/forgot-password", forgotPassword);
 router
   .route("/profile")
   .get(authenticate, getCurrentUserProfile)

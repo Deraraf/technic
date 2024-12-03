@@ -45,6 +45,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getProfileUser: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/profile`,
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `${USERS_URL}/${id}`,
@@ -63,4 +71,5 @@ export const {
   useDeleteUserMutation,
   useProfileMutation,
   useLogoutMutation,
+  useGetProfileUserQuery,
 } = userApiSlice;

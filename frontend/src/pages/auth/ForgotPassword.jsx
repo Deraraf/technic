@@ -7,9 +7,8 @@ import { useSelector } from "react-redux";
 
 import { toast } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
-const Login = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -56,7 +55,7 @@ const Login = () => {
   return (
     <section className="flex flex-col h-screen items-center justify-center  bg-slate-500">
       <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2 ">
-        Login
+        Forgot Password
       </h1>
       <div className="">
         <form
@@ -69,43 +68,17 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="mb-4 p-3 w-[400px] bg-transparent border border-white text-white rounded-xl mt-8  "
           />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            className="p-3 w-[400px] bg-transparent border border-white text-white rounded-xl "
-          />
 
-          <p className="mt-4">
-            <Link
-              to="/forgot-password"
-              className="text-pink-500 hover:underline"
-            >
-              Forgot Password?
-            </Link>
-          </p>
           <button
             type="submit"
             className="text-xl text-white bg-blue-700 w-[300px] mt-8 mb-4 rounded-md py-2 "
           >
-            Submit
+            Send reset link
           </button>
-
-          <div className="mt-4 mb-4">
-            <p className="text-white">
-              Don&apos;t have an account?{" "}
-              <Link
-                to={redirect ? `/register?redirect=${redirect}` : "/register"}
-                className="text-pink-500 hover:underline"
-              >
-                {isLoading ? "Loading..." : "Register"}
-              </Link>
-            </p>
-          </div>
         </form>
       </div>
     </section>
   );
 };
 
-export default Login;
+export default ForgotPassword;
