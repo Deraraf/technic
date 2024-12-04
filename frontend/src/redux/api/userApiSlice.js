@@ -53,6 +53,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
+    forgotPassword: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/forgot-password`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `${USERS_URL}/${id}`,
@@ -71,5 +78,6 @@ export const {
   useDeleteUserMutation,
   useProfileMutation,
   useLogoutMutation,
+  useForgotPasswordMutation,
   useGetProfileUserQuery,
 } = userApiSlice;

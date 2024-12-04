@@ -1,52 +1,19 @@
-import { useEffect, useState } from "react";
-import { useLoginMutation } from "../../redux/api/userApiSlice";
-import { useNavigate } from "react-router-dom";
-import { setUserInfo } from "../../redux/features/auth/authSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-
+import { useState } from "react";
+import { useForgotPasswordMutation } from "../../redux/api/userApiSlice";
 import { toast } from "react-toastify";
-import { Link, useLocation } from "react-router-dom";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
-  const { search } = useLocation();
-
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/";
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-      console.log(redirect);
-    }
-  }, [userInfo, navigate, redirect]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     try {
-      const res = await login({ email, password });
-      console.log(res);
-
-      if (res.error) {
-        return toast.error(res.error?.data?.message);
-      }
-
-      const { data } = res;
-      if (data?.success) {
-        dispatch(setUserInfo({ ...data }));
-        navigate(redirect);
-        return toast.success(data.message);
-      }
-      toast.error("Unexpected issue during login");
+      forgotPassword({ email });
+      toast.success("Password reset link sent successfully");
     } catch (error) {
+      toast.error("Error sending password reset link");
       console.log(error);
     }
   };

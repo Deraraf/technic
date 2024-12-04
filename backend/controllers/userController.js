@@ -3,6 +3,9 @@ import createToken from "../utils/createToken.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import Jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const createUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -234,14 +237,14 @@ const forgotPassword = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "youremail@gmail.com",
-        pass: "yourpassword",
+        user: process.env.User,
+        pass: process.env.App_Password,
       },
     });
 
     const mailOptions = {
-      from: "youremail@gmail.com",
-      to: "myfriend@yahoo.com",
+      from: process.env.User,
+      to: email,
       subject: "Reset your password",
       text: `http://localhost:5173/reset-password/${user._id}/${token}`,
     };
@@ -249,12 +252,10 @@ const forgotPassword = async (req, res) => {
     transporter.sendMail(mailOptions, (error) => {
       if (error) {
         console.error(error);
-        return res
-          .status(500)
-          .json({
-            message: "Error sending password reset link",
-            success: false,
-          });
+        return res.status(500).json({
+          message: "Error sending password reset link",
+          success: false,
+        });
       } else {
         return res.status(200).json({
           message: "Password reset link sent successfully",
