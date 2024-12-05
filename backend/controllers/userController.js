@@ -270,6 +270,34 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    const { password } = req.body;
+    const isCorrectToken = Jwt.verify(token, process.env.JWT_SECRET);
+    if (!isCorrectToken) {
+      return res.status(401).json({ message: "Invalid token", success: false });
+    }
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "User not found", success: false });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    user.password = hashedPassword;
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Password updated successfully", success: true });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error resetting password", success: false });
+  }
+};
+
 export {
   createUser,
   getAllUsers,
@@ -281,4 +309,5 @@ export {
   getUserById,
   updateUserById,
   forgotPassword,
+  resetPassword,
 };
