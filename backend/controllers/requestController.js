@@ -1,17 +1,40 @@
 import Request from "../models/request.js";
 
 const createRequest = async (req, res) => {
-  const { name, department, contact, type, description } = req.body;
+  const {
+    username,
+    contact,
+    department,
+    place,
+    blockNumber,
+    biroNumber,
+    typeOfRequest,
+    description,
+  } = req.body;
 
-  if (!name || !department || !contact || !type || !description) {
-    throw new Error("Please fill all the inputs.");
+  console.log(req.body);
+
+  if (
+    !username ||
+    !department ||
+    !place ||
+    !contact ||
+    !typeOfRequest ||
+    !blockNumber ||
+    !biroNumber ||
+    !description
+  ) {
+    return res.status(400).json({ message: "Please fill all the inputs." });
   }
 
   const newRequest = new Request({
-    name,
-    department,
+    username,
     contact,
-    type,
+    department,
+    place,
+    blockNumber,
+    biroNumber,
+    typeOfRequest,
     description,
   });
 
@@ -47,12 +70,33 @@ const getRequestById = async (req, res) => {
 };
 
 const updateRequestById = async (req, res) => {
-  const { name, department, contact, type, description } = req.body;
+  const {
+    username,
+    contact,
+    department,
+    place,
+    blockNumber,
+    biroNumber,
+    typeOfRequest,
+    description,
+  } = req.body;
   try {
     const request = await Request.findById(req.params.id);
     if (request) {
-      if (name) {
-        request.name = name || request.name;
+      if (username) {
+        request.username = username || request.username;
+      }
+      if (place) {
+        request.place = place || request.place;
+      }
+      if (blockNumber) {
+        request.blockNoumber = blockNoumber || request.blockNumber;
+      }
+      if (biroNumber) {
+        request.biroNumber = biroNumber || request.biroNumber;
+      }
+      if (typeOfRequest) {
+        request.typeOfRequest = typeOfRequest || request.typeOfRequest;
       }
       if (department) {
         request.department = department || request.department;
@@ -60,8 +104,8 @@ const updateRequestById = async (req, res) => {
       if (contact) {
         request.contact = contact || request.contact;
       }
-      if (type) {
-        request.type = type || request.type;
+      if (typeOfRequest) {
+        request.typeOfRequest = typeOfRequest || request.typeOfRequest;
       }
       if (description) {
         request.description = description || request.description;

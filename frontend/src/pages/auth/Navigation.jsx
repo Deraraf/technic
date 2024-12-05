@@ -16,7 +16,7 @@ const Navigation = ({ closeSidebar }) => {
       <Link to="/" className="hover:underline">
         Home
       </Link>
-      <Link to="/request" className="hover:underline">
+      <Link onClick={closeSidebar} to="/request" className="hover:underline">
         Request form
       </Link>
       {/* Add more links as needed */}
@@ -29,17 +29,29 @@ const Navigation = ({ closeSidebar }) => {
         {userInfo?.isAdmin ? (
           <>
             <li>
-              <Link to="/profile" className="hover:underline">
+              <Link
+                onClick={closeSidebar}
+                to="/profile"
+                className="hover:underline"
+              >
                 profile
               </Link>
             </li>
             <li>
-              <Link to="/admin/userlist" className="hover:underline">
+              <Link
+                onClick={closeSidebar}
+                to="/admin/userlist"
+                className="hover:underline"
+              >
                 UsersList
               </Link>
             </li>
             <li>
-              <Link to="/admin/requestlist" className="hover:underline">
+              <Link
+                onClick={closeSidebar}
+                to="/admin/requestlist"
+                className="hover:underline"
+              >
                 RequestsList
               </Link>
             </li>
@@ -47,12 +59,20 @@ const Navigation = ({ closeSidebar }) => {
         ) : (
           <>
             <li>
-              <Link to="/profile" className="hover:underline">
+              <Link
+                onClick={closeSidebar}
+                to="/profile"
+                className="hover:underline"
+              >
                 profile
               </Link>
             </li>
             <li>
-              <Link to="/logout" className="hover:underline">
+              <Link
+                onClick={closeSidebar}
+                to="/logout"
+                className="hover:underline"
+              >
                 Logout
               </Link>
             </li>

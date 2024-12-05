@@ -14,6 +14,7 @@ import ProtectRoute from "./components/ProtectRoute";
 import Profile from "./pages/User/Profile";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import RequstForm from "./pages/requests/RequstForm";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
 
         <Route element={<ProtectRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/request" element={<RequstForm />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoutes />}>
