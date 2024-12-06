@@ -238,7 +238,7 @@ const forgotPassword = async (req, res) => {
       service: "gmail",
       auth: {
         user: process.env.User,
-        pass: process.env.App_Password,
+        pass: process.env.APP_PASSWORD,
       },
     });
 
