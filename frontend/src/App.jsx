@@ -13,6 +13,8 @@ import RequestList from "./pages/admin/RequestList";
 import ProtectRoute from "./components/ProtectRoute";
 import Profile from "./pages/User/Profile";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import RequstForm from "./pages/requests/RequstForm";
 
 function App() {
   return (
@@ -24,9 +26,11 @@ function App() {
         <Route path="/register" element={<Registor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
 
         <Route element={<ProtectRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/request" element={<RequstForm />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoutes />}>

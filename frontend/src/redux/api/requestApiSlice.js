@@ -12,7 +12,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `${REQUESTS_URL}`,
         method: "POST",
-        data,
+        body: data,
       }),
       invalidatesTags: ["Request"],
     }),

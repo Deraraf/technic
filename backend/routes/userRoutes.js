@@ -10,6 +10,7 @@ import {
   getUserById,
   updateUserById,
   forgotPassword,
+  resetPassword,
 } from "../controllers/userController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
@@ -23,6 +24,7 @@ router
 router.post("/auth", loginUser);
 router.post("/logout", logoutUser);
 router.post("/forgot-password", forgotPassword);
+router.route("/reset-password/:id/:token").post(resetPassword);
 router
   .route("/profile")
   .get(authenticate, getCurrentUserProfile)
