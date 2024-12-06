@@ -66,16 +66,16 @@ const RequstForm = () => {
 
   if (isLoading) return <div>Loading...</div>;
   return (
-    <section className="flex flex-col h-screen  items-center justify-center overflow-hidden bg-slate-800">
+    <section className="flex flex-col h-screen absolute left-0 right-0 mt-7  items-center justify-center overflow-hidden bg-slate-800">
       <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2">
         Request Form
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center  w-[90%] max-w-4xl  rounded-lg p-8"
+        className="flex flex-col items-center  justify-center w-[90%] max-w-4xl  rounded-lg p-8"
       >
-        <div className="grid grid-cols-2 gap-x-16 gap-y-4 w-full">
+        <div className="grid grid-cols-2  gap-x-16 gap-y-4 w-full">
           {/* Left Column */}
           <div className="flex flex-col">
             <input
@@ -86,7 +86,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="mb-8 p-4 bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2  bg-transparent border border-white text-white rounded-xl"
             />
             <input
               id="phone"
@@ -96,7 +96,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, contact: Number(e.target.value) })
               }
-              className="mb-8 p-4  bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             />
             <input
               id="department"
@@ -106,7 +106,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
               }
-              className="mb-8 p-4  bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             />
 
             <select
@@ -117,7 +117,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, place: e.target.value })
               }
-              className="mb-8 p-4 bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             >
               <option value="">Select Place የዲፓርትመንት አድራሻ</option>
               <option className="bg-slate-700" value="main campus">
@@ -142,12 +142,8 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, otherPlace: e.target.value })
               }
-              className="mb-8 p-4 bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             />
-          </div>
-
-          {/* Right Column */}
-          <div className="flex flex-col mr-4">
             <input
               id="blockNumber"
               type="number"
@@ -159,8 +155,12 @@ const RequstForm = () => {
                   blockNumber: Number(e.target.value),
                 })
               }
-              className="mb-8 p-4  bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             />
+          </div>
+
+          {/* Right Column */}
+          <div className="flex flex-col mr-4">
             <input
               id="biro"
               type="number"
@@ -169,7 +169,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, biroNumber: Number(e.target.value) })
               }
-              className="mb-8 p-4  bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             />
             <select
               name="job type"
@@ -179,7 +179,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, typeOfRequest: e.target.value })
               }
-              className="mb-8 p-4 bg-transparent border border-white text-white rounded-xl"
+              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             >
               <option value="">Select Job Type የሥራው አይነት</option>
               <option className="bg-slate-700" value="electric job  የኤሌክትሪክ ሥራ">

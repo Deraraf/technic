@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { MdMessage } from "react-icons/md";
 
 const Navigation = ({ closeSidebar }) => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -28,6 +29,15 @@ const Navigation = ({ closeSidebar }) => {
       >
         {userInfo?.isAdmin ? (
           <>
+            <li className="flex items-center space-x-4">
+              <Link
+                onClick={closeSidebar}
+                to="/recent-requests"
+                className="hover:underline"
+              >
+                recent requests <MdMessage size={24} color="green" />
+              </Link>
+            </li>
             <li>
               <Link
                 onClick={closeSidebar}
@@ -37,7 +47,7 @@ const Navigation = ({ closeSidebar }) => {
                 profile
               </Link>
             </li>
-            <li>
+            <li className="">
               <Link
                 onClick={closeSidebar}
                 to="/admin/userlist"
