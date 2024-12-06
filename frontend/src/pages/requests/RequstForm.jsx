@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addRecentRequest } from "../../redux/features/request/recentRequestsSlice";
 
 import { useCreateRequestMutation } from "../../redux/api/requestApiSlice";
 
@@ -17,6 +19,7 @@ const RequstForm = () => {
     description: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [createRequest, { isLoading }] = useCreateRequestMutation();
 
@@ -52,11 +55,12 @@ const RequstForm = () => {
       const requestPayload = { ...formData, place: finalPlace };
 
       const res = await createRequest(requestPayload);
-      console.log(res);
+
+      dispatch(addRecentRequest(res.data));
       if (res.error) {
         return toast.error(res.error?.data?.message);
       }
-      console.log(formData);
+
       navigate("/");
       toast.success("Request created successfully");
     } catch (error) {

@@ -15,6 +15,7 @@ import Profile from "./pages/User/Profile";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import RequstForm from "./pages/requests/RequstForm";
+import RecentRequest from "./pages/admin/RecentRequest";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin" element={<AdminRoutes />}>
           <Route path="userlist" element={<UserList />} />
           <Route path="requestlist" element={<RequestList />} />
+          <Route path="recent-requests" element={<RecentRequest />} />
         </Route>
       </Routes>
     </div>

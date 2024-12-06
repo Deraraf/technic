@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { MdMessage } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { FaBell } from "react-icons/fa";
+import { clearRecentNotifications } from "../../redux/features/request/recentRequestsSlice";
 
 const Navigation = ({ closeSidebar }) => {
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
+  const { count } = useSelector((state) => state?.recentRequests);
+
+  const clearNotificationHandler = () => {
+    dispatch(clearRecentNotifications());
+  };
 
   return (
     <div className="flex flex-col p-4 space-y-4">
@@ -22,23 +29,30 @@ const Navigation = ({ closeSidebar }) => {
       </Link>
       {/* Add more links as needed */}
 
-      <ul
+      <div
         className={`absolute items-center mt-2  space-y-2  text-white  rounded-md shadow-lg ${
           userInfo?.isAdmin ? "top-96" : "top-80"
         }`}
       >
         {userInfo?.isAdmin ? (
           <>
-            <li className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <Link
-                onClick={closeSidebar}
-                to="/recent-requests"
-                className="hover:underline"
+                to="/admin/recent-requests"
+                className="hover:underline "
+                onClick={clearNotificationHandler}
               >
-                recent requests <MdMessage size={24} color="green" />
+                <div className="relative flex items-center">
+                  <FaBell className="text-2xl" />
+                  {count > 0 && (
+                    <span className="absolute top-0 right-0 bg-red-600 text-green-700 rounded-full text-xs px-1">
+                      {count}
+                    </span>
+                  )}
+                </div>
               </Link>
-            </li>
-            <li>
+            </div>
+            <div>
               <Link
                 onClick={closeSidebar}
                 to="/profile"
@@ -46,8 +60,8 @@ const Navigation = ({ closeSidebar }) => {
               >
                 profile
               </Link>
-            </li>
-            <li className="">
+            </div>
+            <div className="">
               <Link
                 onClick={closeSidebar}
                 to="/admin/userlist"
@@ -55,8 +69,8 @@ const Navigation = ({ closeSidebar }) => {
               >
                 UsersList
               </Link>
-            </li>
-            <li>
+            </div>
+            <div>
               <Link
                 onClick={closeSidebar}
                 to="/admin/requestlist"
@@ -64,11 +78,11 @@ const Navigation = ({ closeSidebar }) => {
               >
                 RequestsList
               </Link>
-            </li>
+            </div>
           </>
         ) : (
           <>
-            <li>
+            <div>
               <Link
                 onClick={closeSidebar}
                 to="/profile"
@@ -76,8 +90,8 @@ const Navigation = ({ closeSidebar }) => {
               >
                 profile
               </Link>
-            </li>
-            <li>
+            </div>
+            <div>
               <Link
                 onClick={closeSidebar}
                 to="/logout"
@@ -85,10 +99,10 @@ const Navigation = ({ closeSidebar }) => {
               >
                 Logout
               </Link>
-            </li>
+            </div>
           </>
         )}
-      </ul>
+      </div>
     </div>
   );
 };

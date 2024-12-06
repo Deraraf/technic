@@ -12,8 +12,6 @@ const createRequest = async (req, res) => {
     description,
   } = req.body;
 
-  console.log(req.body);
-
   if (
     !username ||
     !department ||
