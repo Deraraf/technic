@@ -21,7 +21,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       query: ({ id, formData }) => ({
         url: `${REQUESTS_URL}/${id}`,
         method: "PUT",
-        formData,
+        body: formData,
       }),
       invalidatesTags: ["Request"],
     }),
@@ -33,6 +33,24 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Request"],
     }),
+    getRecentRequests: builder.query({
+      query: () => `${REQUESTS_URL}/recent-requests`,
+      providesTags: ["Request"],
+    }),
+    markRequestsSeen: builder.mutation({
+      query: (id) => ({
+        url: `${REQUESTS_URL}/${id}/mark-seen`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Request"],
+    }),
+    getEquipment: builder.query({
+      query: ({ typeOfRequest }) => ({
+        url: `${REQUESTS_URL}/equipment/${typeOfRequest}`,
+        method: "GET",
+      }),
+      providesTags: ["Request"],
+    }),
   }),
 });
 
@@ -41,4 +59,7 @@ export const {
   useCreateRequestMutation,
   useUpdateRequestMutation,
   useDeleteRequestMutation,
+  useGetRecentRequestsQuery,
+  useMarkRequestsSeenMutation,
+  useGetEquipmentQuery,
 } = requestApiSlice;

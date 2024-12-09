@@ -24,6 +24,12 @@ const createRequest = async (req, res) => {
   ) {
     return res.status(400).json({ message: "Please fill all the inputs." });
   }
+  if (description.length > 200) {
+    return res.status(400).json({ message: "Description is too long " });
+  }
+  if (description.length < 10) {
+    return res.status(400).json({ message: "Description is too short" });
+  }
 
   const newRequest = new Request({
     username,
@@ -77,44 +83,30 @@ const updateRequestById = async (req, res) => {
     biroNumber,
     typeOfRequest,
     description,
+    equipment,
   } = req.body;
+
   try {
     const request = await Request.findById(req.params.id);
     if (request) {
-      if (username) {
-        request.username = username || request.username;
-      }
-      if (place) {
-        request.place = place || request.place;
-      }
-      if (blockNumber) {
-        request.blockNoumber = blockNoumber || request.blockNumber;
-      }
-      if (biroNumber) {
-        request.biroNumber = biroNumber || request.biroNumber;
-      }
-      if (typeOfRequest) {
-        request.typeOfRequest = typeOfRequest || request.typeOfRequest;
-      }
-      if (department) {
-        request.department = department || request.department;
-      }
-      if (contact) {
-        request.contact = contact || request.contact;
-      }
-      if (typeOfRequest) {
-        request.typeOfRequest = typeOfRequest || request.typeOfRequest;
-      }
-      if (description) {
-        request.description = description || request.description;
+      if (username) request.username = username;
+      if (place) request.place = place;
+      if (blockNumber) request.blockNumber = blockNumber;
+      if (biroNumber) request.biroNumber = biroNumber;
+      if (typeOfRequest) request.typeOfRequest = typeOfRequest;
+      if (department) request.department = department;
+      if (contact) request.contact = contact;
+      if (description) request.description = description;
+      if (equipment && Array.isArray(equipment)) {
+        request.equipment = equipment;
       }
       await request.save();
       res.status(200).json(request);
     } else {
-      res.status(401).json({ message: "request not found" });
+      res.status(404).json({ message: "Request not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error updating request" });
+    res.status(500).json({ message: "Error updating request", error });
   }
 };
 
@@ -132,10 +124,54 @@ const deleteRequestById = async (req, res) => {
   }
 };
 
+const getRecentRequests = async (req, res) => {
+  try {
+    const requests = await Request.find({
+      seenByAdmins: false,
+    }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting recent requests" });
+  }
+};
+
+const markRequestSeenById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const request = await Request.findById(id);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+    request.seenByAdmins = true;
+    request.status = "Completed";
+    await request.save();
+    res.status(200).json(request);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating request" });
+  }
+};
+
+const getEquipment = async (req, res) => {
+  const { typeOfRequest } = req.params;
+  try {
+    const equipment = await Request.find({ typeOfRequest }).select("equipment");
+    res.status(200).json(equipment);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting equipment" });
+  }
+};
+
 export {
   createRequest,
   getAllRequests,
   getRequestById,
   updateRequestById,
   deleteRequestById,
+  getRecentRequests,
+  markRequestSeenById,
+  getEquipment,
 };

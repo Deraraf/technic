@@ -21,8 +21,8 @@ const RequstForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [createRequest, { isLoading }] = useCreateRequestMutation();
-
+  const [createRequest, { isLoading, error }] = useCreateRequestMutation();
+  console.log(error);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -195,7 +195,18 @@ const RequstForm = () => {
               <option className="bg-slate-700" value="carpenter job  የአናፂ ስራ">
                 carpenter job የአናፂ ስራ
               </option>
-              Iron worker የብረት ሥራ
+              <option className="bg-slate-700" value="Iron worker የብረት ሥራ">
+                Iron worker የብረት ሥራ
+              </option>
+              <option className="bg-slate-700" value="Painter የቀለም ሥራ">
+                Painter የቀለም ሥራ
+              </option>
+              <option
+                className="bg-slate-700"
+                value="Construction work የግንብ ሥራ"
+              >
+                Construction work የግንብ ሥራ
+              </option>
             </select>
             <textarea
               id="description "
@@ -207,6 +218,9 @@ const RequstForm = () => {
               }
               className="h-[300px] p-2 bg-transparent border border-white text-white rounded-xl"
             />
+            <p className="text-red-500 2xl text-center">
+              {error?.data?.message}
+            </p>
           </div>
         </div>
 

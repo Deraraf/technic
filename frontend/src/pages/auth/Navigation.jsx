@@ -1,17 +1,12 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaBell } from "react-icons/fa";
-import { clearRecentNotifications } from "../../redux/features/request/recentRequestsSlice";
+import { useGetRecentRequestsQuery } from "../../redux/api/requestApiSlice";
 
 const Navigation = ({ closeSidebar }) => {
-  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  const { count } = useSelector((state) => state?.recentRequests);
-
-  const clearNotificationHandler = () => {
-    dispatch(clearRecentNotifications());
-  };
+  const { data: recentRequests } = useGetRecentRequestsQuery();
 
   return (
     <div className="flex flex-col p-4 space-y-4">
@@ -40,13 +35,13 @@ const Navigation = ({ closeSidebar }) => {
               <Link
                 to="/admin/recent-requests"
                 className="hover:underline "
-                onClick={clearNotificationHandler}
+                onClick={closeSidebar}
               >
                 <div className="relative flex items-center">
                   <FaBell className="text-2xl" />
-                  {count > 0 && (
+                  {recentRequests?.length > 0 && (
                     <span className="absolute top-0 right-0 bg-red-600 text-green-700 rounded-full text-xs px-1">
-                      {count}
+                      {recentRequests?.length}
                     </span>
                   )}
                 </div>
@@ -77,6 +72,15 @@ const Navigation = ({ closeSidebar }) => {
                 className="hover:underline"
               >
                 RequestsList
+              </Link>
+            </div>
+            <div>
+              <Link
+                onClick={closeSidebar}
+                to="/admin/equipmentlist"
+                className="hover:underline"
+              >
+                Equipement List
               </Link>
             </div>
           </>

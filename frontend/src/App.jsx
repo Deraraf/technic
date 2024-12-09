@@ -16,6 +16,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import RequstForm from "./pages/requests/RequstForm";
 import RecentRequest from "./pages/admin/RecentRequest";
+import EquipementList from "./pages/admin/EquipementList";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="userlist" element={<UserList />} />
           <Route path="requestlist" element={<RequestList />} />
           <Route path="recent-requests" element={<RecentRequest />} />
+          <Route path="equipmentlist" element={<EquipementList />} />
         </Route>
       </Routes>
     </div>
