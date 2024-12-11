@@ -7,14 +7,15 @@ const UpdateRequestModal = ({ request, onClose }) => {
   const [updateRequest] = useUpdateRequestMutation();
 
   const [formData, setFormData] = useState({
-    username: request.username,
-    contact: request.contact,
-    department: request.department,
-    place: request.place,
-    blockNumber: request.blockNumber,
-    biroNumber: request.biroNumber,
-    typeOfRequest: request.typeOfRequest,
-    description: request.description,
+    username: request.username || "",
+    contact: request.contact || "",
+    department: request.department || "",
+    place: request.place || "",
+    blockNumber: request.blockNumber || 0,
+    biroNumber: request.biroNumber || 0,
+    typeOfRequest: request.typeOfRequest || "",
+    description: request.description || "",
+    systemNumber: request.systemNumber || "",
   });
 
   const [equipmentList, setEquipmentList] = useState(request.equipment || []);
@@ -70,9 +71,15 @@ const UpdateRequestModal = ({ request, onClose }) => {
             <div key={key} className="mb-4">
               <label className="block text-sm font-medium mb-1">{key}</label>
               <input
-                type={key === "contact" ? "number" : "text"}
+                type={
+                  key === "contact" ||
+                  key === "blockNumber" ||
+                  key === "biroNumber"
+                    ? "number"
+                    : "text"
+                }
                 name={key}
-                value={formData[key]}
+                value={formData[key] || ""}
                 onChange={handleChange}
                 className="w-full border rounded p-2"
               />

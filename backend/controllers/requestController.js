@@ -84,6 +84,7 @@ const updateRequestById = async (req, res) => {
     typeOfRequest,
     description,
     equipment,
+    systemNumber,
   } = req.body;
 
   try {
@@ -100,6 +101,7 @@ const updateRequestById = async (req, res) => {
       if (equipment && Array.isArray(equipment)) {
         request.equipment = equipment;
       }
+      if (systemNumber) request.systemNumber = systemNumber;
       await request.save();
       res.status(200).json(request);
     } else {

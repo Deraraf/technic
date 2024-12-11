@@ -84,6 +84,7 @@ const RequestList = () => {
             <th className="px-4 py-2 text-left">DESCRIPTION</th>
             <th className="px-4 py-2 text-left">STATUS</th>
             <th className="px-4 py-2 text-left">EQUIPMENT</th>
+            <th className="px-4 py-2 text-left">STM NUM</th>
             <th className="px-4 py-2 text-left">UPDATE</th>
             <th className="px-4 py-2 text-left">ACTION</th>
           </tr>
@@ -125,6 +126,7 @@ const RequestList = () => {
                   <p className="text-white p-2 bg-blue-700">No Equipment</p>
                 )}
               </td>
+              <td className="px-4 py-2 text-left">{request.systemNumber}</td>
               <td
                 className="px-4 py-2 text-left"
                 onClick={() => setSelectedRequest(request)}

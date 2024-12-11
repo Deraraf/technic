@@ -9,7 +9,7 @@ const Navigation = ({ closeSidebar }) => {
   const { data: recentRequests } = useGetRecentRequestsQuery();
 
   return (
-    <div className="flex flex-col p-4 space-y-4">
+    <div className="flex  flex-col justify-center items-center space-y-4">
       <button
         onClick={closeSidebar}
         className="self-end text-xl text-white hover:text-gray-400"
@@ -25,7 +25,7 @@ const Navigation = ({ closeSidebar }) => {
       {/* Add more links as needed */}
 
       <div
-        className={`absolute items-center mt-2  space-y-2  text-white  rounded-md shadow-lg ${
+        className={`absolute items-center space-y-2  text-white  rounded-md shadow-lg ${
           userInfo?.isAdmin ? "top-96" : "top-80"
         }`}
       >
