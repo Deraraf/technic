@@ -153,7 +153,7 @@ const getAllUsers = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ message: "Error getting users", success: false, errors: error });
+      .json({ message: "Error getting user", success: false, errors: error });
   }
 };
 
@@ -298,6 +298,11 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const totalUsers = async (req, res) => {
+  const totalUsers = await User.countDocuments({});
+  res.json({ totalUsers });
+};
+
 export {
   createUser,
   getAllUsers,
@@ -310,4 +315,5 @@ export {
   updateUserById,
   forgotPassword,
   resetPassword,
+  totalUsers,
 };

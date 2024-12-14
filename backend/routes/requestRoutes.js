@@ -33,4 +33,5 @@ router
 router
   .route("/equipment/:typeOfRequest")
   .get(authenticate, autorizedAdmin, getEquipment);
+
 export default router;

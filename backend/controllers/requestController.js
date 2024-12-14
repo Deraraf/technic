@@ -46,8 +46,7 @@ const createRequest = async (req, res) => {
     await newRequest.save();
     res.status(201).json(newRequest);
   } catch (error) {
-    res.status(400);
-    throw new Error("Invalid request data");
+    res.status(400).json({ message: "Invalid request data" });
   }
 };
 
@@ -167,6 +166,28 @@ const getEquipment = async (req, res) => {
   }
 };
 
+const getTotalEquipment = async (req, res) => {
+  try {
+    const equipmentList = await Request.aggregate([
+      { $unwind: "$equipment" }, // Deconstruct the equipment array
+      {
+        $group: {
+          _id: "$equipment.name",
+          totalQuantity: { $sum: "$equipment.quantity" },
+        },
+      },
+      { $project: { _id: 0, name: "$_id", totalQuantity: 1 } }, // Format the response
+    ]);
+
+    res.status(200).json(equipmentList);
+  } catch (error) {
+    console.error("Error fetching equipment:", error);
+    res
+      .status(500)
+      .json({ message: "Error getting equipment", error: error.message });
+  }
+};
+
 export {
   createRequest,
   getAllRequests,
@@ -176,4 +197,5 @@ export {
   getRecentRequests,
   markRequestSeenById,
   getEquipment,
+  getTotalEquipment,
 };

@@ -11,15 +11,13 @@ import {
   updateUserById,
   forgotPassword,
   resetPassword,
+  totalUsers,
 } from "../controllers/userController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router
-  .route("/")
-  .post(createUser)
-  .get(authenticate, autorizedAdmin, getAllUsers);
+router.route("/").post(createUser).get(getAllUsers);
 
 router.post("/auth", loginUser);
 router.post("/logout", logoutUser);
@@ -34,5 +32,6 @@ router
   .delete(authenticate, autorizedAdmin, deleteUserById)
   .get(authenticate, autorizedAdmin, getUserById)
   .put(authenticate, autorizedAdmin, updateUserById);
+router.get("/total-users", totalUsers);
 
 export default router;

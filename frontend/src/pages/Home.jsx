@@ -1,11 +1,54 @@
-import { Link } from "react-router-dom";
-
+import { useCountTotalRequestsQuery } from "../redux/api/requestApiSlice";
+import { useCountPendingRequestsQuery } from "../redux/api/requestApiSlice";
+import { useCountCompletedRequestsQuery } from "../redux/api/requestApiSlice";
+import { useCountEquipmentQuery } from "../redux/api/requestApiSlice";
 const Homepage = () => {
+  const { data: totalRequests } = useCountTotalRequestsQuery();
+  const { data: pendingRequests } = useCountPendingRequestsQuery();
+  const { data: completedRequests } = useCountCompletedRequestsQuery();
+  const { data: equipment } = useCountEquipmentQuery();
+
+  const totalEquipmentQuantity = [];
+  equipment?.forEach((equipment) => {
+    totalEquipmentQuantity.push(equipment.totalQuantity);
+  });
+
+  const lastEquipmentQuantity = totalEquipmentQuantity.reduce(
+    (acc, curr) => acc + curr,
+    0
+  );
+
+  console.log(lastEquipmentQuantity);
   return (
     <div className="bg-gray-100">
+      {/* Header */}
+      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
+        <div className="text-xl font-bold">Technic Department</div>
+        <nav className="space-x-4">
+          <a href="#" className="hover:underline">
+            Home
+          </a>
+          <a href="#" className="hover:underline">
+            Submit Request
+          </a>
+          <a href="#" className="hover:underline">
+            About
+          </a>
+          <a href="#" className="hover:underline">
+            Contact Us
+          </a>
+        </nav>
+        <div>
+          <span className="mr-4">Welcome, Username</span>
+          <button className="bg-white text-blue-600 px-4 py-2 rounded">
+            Logout
+          </button>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="text-center py-12 bg-blue-100">
-        <h1 className="text-4xl font-bold text-blue-600 mb-4 mt-8">
+        <h1 className="text-4xl font-bold text-blue-600 mb-4">
           Streamline Maintenance Requests with Ease
         </h1>
         <p className="text-lg mb-6">
@@ -13,10 +56,10 @@ const Homepage = () => {
         </p>
         <div className="space-x-4">
           <button className="bg-blue-600 text-white px-6 py-3 rounded">
-            <Link to="/request">Submit a Request</Link>
+            Submit a Request
           </button>
           <button className="bg-gray-700 text-white px-6 py-3 rounded">
-            <Link to="/requests">View Requests</Link>
+            View Requests
           </button>
         </div>
       </section>
@@ -24,10 +67,19 @@ const Homepage = () => {
       {/* Dashboard Cards */}
       <section className="py-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { title: "Total Requests", count: 120 },
-          { title: "Pending Requests", count: 50 },
-          { title: "Completed Requests", count: 70 },
-          { title: "Total Equipment Used", count: 300 },
+          { title: "Total Requests", count: totalRequests },
+          {
+            title: "Pending Requests",
+            count: pendingRequests ? pendingRequests : 0,
+          },
+          {
+            title: "Completed Requests",
+            count: completedRequests ? completedRequests : 0,
+          },
+          {
+            title: "Total Equipment Used",
+            count: lastEquipmentQuantity ? lastEquipmentQuantity : 0,
+          },
         ].map((card, index) => (
           <div
             key={index}

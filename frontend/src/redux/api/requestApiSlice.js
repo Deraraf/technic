@@ -51,6 +51,19 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Request"],
     }),
+
+    countTotalRequests: builder.query({
+      query: () => "count-requests",
+    }),
+    countPendingRequests: builder.query({
+      query: () => "count-pending-requests",
+    }),
+    countCompletedRequests: builder.query({
+      query: () => "count-completed-requests",
+    }),
+    countEquipment: builder.query({
+      query: () => "count-equipment",
+    }),
   }),
 });
 
@@ -62,4 +75,8 @@ export const {
   useGetRecentRequestsQuery,
   useMarkRequestsSeenMutation,
   useGetEquipmentQuery,
+  useCountTotalRequestsQuery,
+  useCountPendingRequestsQuery,
+  useCountCompletedRequestsQuery,
+  useCountEquipmentQuery,
 } = requestApiSlice;

@@ -74,7 +74,8 @@ const UpdateRequestModal = ({ request, onClose }) => {
                 type={
                   key === "contact" ||
                   key === "blockNumber" ||
-                  key === "biroNumber"
+                  key === "biroNumber" ||
+                  key === "systemNumber"
                     ? "number"
                     : "text"
                 }

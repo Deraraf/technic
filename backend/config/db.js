@@ -1,30 +1,30 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-dotenv.config();
 
 dotenv.config();
 
-const connectedDB = async () => {
-  const connection = mongoose.connection.readyState;
-
-  // Prevent multiple attempts if already connected or connecting
-  if (connection === 1) {
-    console.log("Already connected to MongoDB");
-    return;
-  }
-
-  if (connection === 2) {
-    console.log("Connection to MongoDB is already in progress...");
-    return;
-  }
-
+const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB");
+    // Check the current connection state
+    const connectionState = mongoose.connection.readyState;
+
+    switch (connectionState) {
+      case 1: // Connected
+        console.log("Already connected to MongoDB");
+        return;
+
+      case 2: // Connecting
+        console.log("Connection to MongoDB is already in progress...");
+        return;
+
+      default: // Not connected or disconnected (states 0 or 3)
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("Connected to MongoDB");
+    }
   } catch (error) {
-    console.log("Error connecting to MongoDB", error);
-    process.exit(1); // Exit on failure to avoid running without a DB connection
+    console.error("Error connecting to MongoDB:", error.message);
+    process.exit(1); // Exit the process if the database connection fails
   }
 };
 
-export default connectedDB;
+export default connectDB;

@@ -18,14 +18,15 @@ const requestSchema = new mongoose.Schema(
     dateRequested: { type: Date, default: Date.now },
     status: { type: String, default: "Pending..." },
     seenByAdmins: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now },
     equipment: [
       {
-        name: { type: String, required: true },
-        quantity: { type: Number, required: true },
+        name: { type: String },
+        quantity: { type: Number },
         status: { type: String, default: "Used" }, // Optional status
       },
     ],
-    systemNumber: { type: String, required: true },
+    systemNumber: { type: Number },
   },
   { timestamps: true }
 );
