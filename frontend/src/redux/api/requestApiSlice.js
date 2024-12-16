@@ -6,7 +6,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
     getRequests: builder.query({
       query: () => `${REQUESTS_URL}`,
 
-      providesTags: ["Request"],
+      providesTags: ["Requests"],
     }),
     createRequest: builder.mutation({
       query: (data) => ({
@@ -14,7 +14,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Request"],
+      invalidatesTags: ["Requests", "Equipment"],
     }),
 
     updateRequest: builder.mutation({
@@ -23,7 +23,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: ["Request"],
+      invalidatesTags: ["Requests"],
     }),
 
     deleteRequest: builder.mutation({
@@ -31,43 +31,47 @@ export const requestApiSlice = apiSlice.injectEndpoints({
         url: `${REQUESTS_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Request"],
+      invalidatesTags: ["Requests"],
     }),
     getRecentRequests: builder.query({
       query: () => `${REQUESTS_URL}/recent-requests`,
-      providesTags: ["Request"],
+      providesTags: ["Requests"],
     }),
 
     getLimitOfRequests: builder.query({
       query: () => `${REQUESTS_URL}/get-limit-of-requests`,
-      providesTags: ["Request"],
+      providesTags: ["Requests"],
     }),
     markRequestsSeen: builder.mutation({
       query: (id) => ({
         url: `${REQUESTS_URL}/${id}/mark-seen`,
         method: "PUT",
       }),
-      invalidatesTags: ["Request"],
+      invalidatesTags: ["Requests"],
     }),
     getEquipment: builder.query({
       query: ({ typeOfRequest }) => ({
         url: `${REQUESTS_URL}/equipment/${typeOfRequest}`,
         method: "GET",
       }),
-      providesTags: ["Request"],
+      providesTags: ["Requests"],
     }),
 
     countTotalRequests: builder.query({
       query: () => "count-requests",
+      providesTags: ["Requests"],
     }),
     countPendingRequests: builder.query({
       query: () => "count-pending-requests",
+      providesTags: ["Requests"],
     }),
     countCompletedRequests: builder.query({
       query: () => "count-completed-requests",
+      providesTags: ["Requests"],
     }),
     countEquipment: builder.query({
       query: () => "count-equipment",
+      providesTags: ["Equipment"],
     }),
   }),
 });

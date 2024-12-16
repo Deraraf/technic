@@ -3,6 +3,7 @@ import { useCountPendingRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountCompletedRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountEquipmentQuery } from "../redux/api/requestApiSlice";
 import { useGetLimitOfRequestsQuery } from "../redux/api/requestApiSlice";
+import { Link } from "react-router-dom";
 const Homepage = () => {
   const { data: totalRequests } = useCountTotalRequestsQuery();
   const { data: pendingRequests } = useCountPendingRequestsQuery();
@@ -22,34 +23,9 @@ const Homepage = () => {
 
   return (
     <div className="bg-gray-100">
-      {/* Header */}
-      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <div className="text-xl font-bold">Technic Department</div>
-        <nav className="space-x-4">
-          <a href="#" className="hover:underline">
-            Home
-          </a>
-          <a href="#" className="hover:underline">
-            Submit Request
-          </a>
-          <a href="#" className="hover:underline">
-            About
-          </a>
-          <a href="#" className="hover:underline">
-            Contact Us
-          </a>
-        </nav>
-        <div>
-          <span className="mr-4">Welcome, Username</span>
-          <button className="bg-white text-blue-600 px-4 py-2 rounded">
-            Logout
-          </button>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="text-center py-12 bg-blue-100">
-        <h1 className="text-4xl font-bold text-blue-600 mb-4">
+        <h1 className="text-4xl font-bold text-blue-600 mb-4 mt-3">
           Streamline Maintenance Requests with Ease
         </h1>
         <p className="text-lg mb-6">
@@ -57,10 +33,10 @@ const Homepage = () => {
         </p>
         <div className="space-x-4">
           <button className="bg-blue-600 text-white px-6 py-3 rounded">
-            Submit a Request
+            <Link to="/request">Submit a Request</Link>
           </button>
           <button className="bg-gray-700 text-white px-6 py-3 rounded">
-            View Requests
+            <Link to={"/your-requests"}> View Requests Your Request</Link>
           </button>
         </div>
       </section>

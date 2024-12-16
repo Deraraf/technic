@@ -12,7 +12,7 @@ const Navigation = ({ closeSidebar }) => {
     <div className="flex  flex-col justify-center items-center space-y-4">
       <button
         onClick={closeSidebar}
-        className="self-end text-xl text-white hover:text-gray-400"
+        className="self-end text-xl text-white rounded-[50%] w-8 mr-2 mt-2 h-8 bg-slate-950 hover:text-gray-400"
       >
         X
       </button>
