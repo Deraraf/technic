@@ -138,6 +138,17 @@ const getRecentRequests = async (req, res) => {
   }
 };
 
+const getLimitOfRequests = async (req, res) => {
+  try {
+    const limitOfRequests = await Request.find()
+      .sort({ createdAt: -1 })
+      .limit(5);
+    res.status(200).json(limitOfRequests);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting limit of requests" });
+  }
+};
+
 const markRequestSeenById = async (req, res) => {
   const { id } = req.params;
 
@@ -198,4 +209,5 @@ export {
   markRequestSeenById,
   getEquipment,
   getTotalEquipment,
+  getLimitOfRequests,
 };

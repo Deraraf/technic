@@ -2,12 +2,14 @@ import { useCountTotalRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountPendingRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountCompletedRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountEquipmentQuery } from "../redux/api/requestApiSlice";
+import { useGetLimitOfRequestsQuery } from "../redux/api/requestApiSlice";
 const Homepage = () => {
   const { data: totalRequests } = useCountTotalRequestsQuery();
   const { data: pendingRequests } = useCountPendingRequestsQuery();
   const { data: completedRequests } = useCountCompletedRequestsQuery();
   const { data: equipment } = useCountEquipmentQuery();
-
+  const { data: limitOfRequests } = useGetLimitOfRequestsQuery();
+  console.log(limitOfRequests);
   const totalEquipmentQuantity = [];
   equipment?.forEach((equipment) => {
     totalEquipmentQuantity.push(equipment.totalQuantity);
@@ -18,7 +20,6 @@ const Homepage = () => {
     0
   );
 
-  console.log(lastEquipmentQuantity);
   return (
     <div className="bg-gray-100">
       {/* Header */}
@@ -111,14 +112,16 @@ const Homepage = () => {
               </tr>
             </thead>
             <tbody>
-              {[...Array(5)].map((_, i) => (
-                <tr key={i}>
-                  <td className="border px-4 py-2">User {i + 1}</td>
-                  <td className="border px-4 py-2">Electric</td>
-                  <td className="border px-4 py-2">Pending</td>
-                  <td className="border px-4 py-2">2024-12-11</td>
-                </tr>
-              ))}
+              {limitOfRequests?.map(
+                ({ _id, username, status, typeOfRequest, createdAt }) => (
+                  <tr key={_id}>
+                    <td className="border px-4 py-2">{username}</td>
+                    <td className="border px-4 py-2">{typeOfRequest}</td>
+                    <td className="border px-4 py-2">{status}</td>
+                    <td className="border px-4 py-2">{createdAt}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>

@@ -37,6 +37,11 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       query: () => `${REQUESTS_URL}/recent-requests`,
       providesTags: ["Request"],
     }),
+
+    getLimitOfRequests: builder.query({
+      query: () => `${REQUESTS_URL}/get-limit-of-requests`,
+      providesTags: ["Request"],
+    }),
     markRequestsSeen: builder.mutation({
       query: (id) => ({
         url: `${REQUESTS_URL}/${id}/mark-seen`,
@@ -73,6 +78,7 @@ export const {
   useUpdateRequestMutation,
   useDeleteRequestMutation,
   useGetRecentRequestsQuery,
+  useGetLimitOfRequestsQuery,
   useMarkRequestsSeenMutation,
   useGetEquipmentQuery,
   useCountTotalRequestsQuery,

@@ -58,7 +58,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-blue-500 text-white py-2 shadow-md fixed w-full z-50">
+      <header className="bg-blue-500 text-white py-1 shadow-md fixed w-full z-50">
         <div className="container mx-auto flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold">
             <img src={image} alt="logo" width={50} height={50} />
