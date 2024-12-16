@@ -83,12 +83,12 @@ const Header = () => {
                   Request form
                 </Link>
 
-                <div className="flex items-center space-x-4 relative group">
-                  <button className="hover:underline">
-                    {userInfo.username}
+                <div className="flex items-center space-x-4">
+                  <button className="rounded-full bg-blue-700 text-white text-center w-20 h-12 hover:bg-blue-800">
+                    <p className="text-center">{userInfo.username}</p>
                   </button>
                   <button
-                    className="block w-full px-4 py-2 hover:bg-blue-700"
+                    className="block w-full px-2  hover:bg-blue-700"
                     onClick={handleLogout}
                   >
                     Logout
@@ -108,7 +108,7 @@ const Header = () => {
           {/* Sidebar */}
           <div
             id="sidebar"
-            className="fixed top-[58px] left-0 h-[100vh] w-[15%] bg-gray-800 text-white shadow-lg z-40"
+            className="fixed top-[58px] left-0 h-[100vh] pl-2 w-[35%] sm:w-[15%] bg-black text-white shadow-lg z-40"
           >
             <Navigation closeSidebar={closeSidebar} />
           </div>

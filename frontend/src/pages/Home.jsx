@@ -10,7 +10,7 @@ const Homepage = () => {
   const { data: completedRequests } = useCountCompletedRequestsQuery();
   const { data: equipment } = useCountEquipmentQuery();
   const { data: limitOfRequests } = useGetLimitOfRequestsQuery();
-  console.log(limitOfRequests);
+
   const totalEquipmentQuantity = [];
   equipment?.forEach((equipment) => {
     totalEquipmentQuantity.push(equipment.totalQuantity);
@@ -20,6 +20,7 @@ const Homepage = () => {
     (acc, curr) => acc + curr,
     0
   );
+  console.log(lastEquipmentQuantity);
 
   return (
     <div className="bg-gray-100">
@@ -36,7 +37,7 @@ const Homepage = () => {
             <Link to="/request">Submit a Request</Link>
           </button>
           <button className="bg-gray-700 text-white px-6 py-3 rounded">
-            <Link to={"/your-requests"}> View Requests Your Request</Link>
+            <Link to={"/your-requests"}> View Your Request</Link>
           </button>
         </div>
       </section>
@@ -94,7 +95,9 @@ const Homepage = () => {
                     <td className="border px-4 py-2">{username}</td>
                     <td className="border px-4 py-2">{typeOfRequest}</td>
                     <td className="border px-4 py-2">{status}</td>
-                    <td className="border px-4 py-2">{createdAt}</td>
+                    <td className="border px-4 py-2">
+                      {createdAt.split("T")[0]}
+                    </td>
                   </tr>
                 )
               )}

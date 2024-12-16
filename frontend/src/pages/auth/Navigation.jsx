@@ -9,23 +9,30 @@ const Navigation = ({ closeSidebar }) => {
   const { data: recentRequests } = useGetRecentRequestsQuery();
 
   return (
-    <div className="flex  flex-col justify-center items-center space-y-4">
+    <div className="flex flex-col justify-center w-full items-center space-y-4">
       <button
         onClick={closeSidebar}
         className="self-end text-xl text-white rounded-[50%] w-8 mr-2 mt-2 h-8 bg-slate-950 hover:text-gray-400"
       >
         X
       </button>
-      <Link to="/" className="hover:underline">
+      <Link
+        to="/"
+        className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
+      >
         Home
       </Link>
-      <Link onClick={closeSidebar} to="/request" className="hover:underline">
+      <Link
+        onClick={closeSidebar}
+        to="/request"
+        className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
+      >
         Request form
       </Link>
       {/* Add more links as needed */}
 
       <div
-        className={`absolute items-center space-y-2  text-white  rounded-md shadow-lg ${
+        className={`absolute items-center space-y-8 text-white w-full ml-8 pb-4  rounded-md shadow-xl ${
           userInfo?.isAdmin ? "top-96" : "top-80"
         }`}
       >
@@ -34,7 +41,7 @@ const Navigation = ({ closeSidebar }) => {
             <div className="flex items-center space-x-4">
               <Link
                 to="/admin/recent-requests"
-                className="hover:underline "
+                className="hover:underline"
                 onClick={closeSidebar}
               >
                 <div className="relative flex items-center">
@@ -47,20 +54,20 @@ const Navigation = ({ closeSidebar }) => {
                 </div>
               </Link>
             </div>
-            <div>
+            <div className="mt-8">
               <Link
                 onClick={closeSidebar}
                 to="/profile"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
               >
                 profile
               </Link>
             </div>
-            <div className="">
+            <div className="mt-8">
               <Link
                 onClick={closeSidebar}
                 to="/admin/userlist"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
               >
                 UsersList
               </Link>
@@ -69,7 +76,7 @@ const Navigation = ({ closeSidebar }) => {
               <Link
                 onClick={closeSidebar}
                 to="/admin/requestlist"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
               >
                 RequestsList
               </Link>
@@ -78,7 +85,7 @@ const Navigation = ({ closeSidebar }) => {
               <Link
                 onClick={closeSidebar}
                 to="/admin/equipmentlist"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
               >
                 Equipement List
               </Link>
@@ -90,7 +97,7 @@ const Navigation = ({ closeSidebar }) => {
               <Link
                 onClick={closeSidebar}
                 to="/profile"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
               >
                 profile
               </Link>
@@ -99,7 +106,7 @@ const Navigation = ({ closeSidebar }) => {
               <Link
                 onClick={closeSidebar}
                 to="/logout"
-                className="hover:underline"
+                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
               >
                 Logout
               </Link>

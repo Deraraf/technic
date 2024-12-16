@@ -142,7 +142,7 @@ const RequstForm = () => {
               id="otherPlace"
               type="text"
               value={formData.otherPlace}
-              placeholder="Enter Other Place የተለየ ቦታ"
+              placeholder="A different place የተለየ ቦታ"
               onChange={(e) =>
                 setFormData({ ...formData, otherPlace: e.target.value })
               }
@@ -185,21 +185,21 @@ const RequstForm = () => {
               }
               className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
             >
-              <option value="">Select Job Type የሥራው አይነት</option>
+              <option value="">Select type of work የሥራው አይነት</option>
               <option className="bg-slate-700" value="electric job  የኤሌክትሪክ ሥራ">
-                electric job የኤሌክትሪክ ሥራ
+                Electrical work የኤሌክትሪክ ሥራ
               </option>
-              <option className="bg-slate-700" value="sanitary job  የቧንቧ 	ሥራ">
-                sanitary job የቧንቧ ሥራ
+              <option className="bg-slate-700" value="Plumbing work  የቧንቧ 	ሥራ">
+                Plumbing work የቧንቧ ሥራ
               </option>
-              <option className="bg-slate-700" value="carpenter job  የአናፂ ስራ">
-                carpenter job የአናፂ ስራ
+              <option className="bg-slate-700" value="Carpenter's work የአናፂ ስራ">
+                Carpenter&apos;s work የአናፂ ሥራ
               </option>
               <option className="bg-slate-700" value="Iron worker የብረት ሥራ">
                 Iron worker የብረት ሥራ
               </option>
               <option className="bg-slate-700" value="Painter የቀለም ሥራ">
-                Painter የቀለም ሥራ
+                Paint job የቀለም ሥራ
               </option>
               <option
                 className="bg-slate-700"

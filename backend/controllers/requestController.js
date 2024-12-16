@@ -52,7 +52,7 @@ const createRequest = async (req, res) => {
 
 const getAllRequests = async (req, res) => {
   try {
-    const requests = await Request.find();
+    const requests = await Request.find().sort({ createdAt: -1 });
     res.status(200).json(requests);
   } catch (error) {
     res.status(500).json({ message: "Error getting requests" });
