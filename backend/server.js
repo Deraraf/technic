@@ -111,6 +111,17 @@ app.get("/count-equipment", async (req, res) => {
   }
 });
 
+app.get("/get-limit-of-requests", async (req, res) => {
+  try {
+    const limitOfRequests = await Request.find()
+      .sort({ createdAt: -1 })
+      .limit(5);
+    res.status(200).json(limitOfRequests);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting limit of requests" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

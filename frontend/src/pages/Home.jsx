@@ -20,7 +20,6 @@ const Homepage = () => {
     (acc, curr) => acc + curr,
     0
   );
-  console.log(lastEquipmentQuantity);
 
   return (
     <div className="bg-gray-100">
@@ -37,7 +36,7 @@ const Homepage = () => {
             <Link to="/request">Submit a Request</Link>
           </button>
           <button className="bg-gray-700 text-white px-6 py-3 rounded">
-            <Link to={"/your-requests"}> View Your Request</Link>
+            <Link to={"/worker-page"}> View Workers Page</Link>
           </button>
         </div>
       </section>

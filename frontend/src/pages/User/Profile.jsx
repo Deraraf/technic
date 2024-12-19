@@ -33,7 +33,7 @@ const Profile = () => {
         email,
         password,
       });
-      console.log(res);
+
       if (res.error) {
         return toast.error(res.error?.data?.message);
       }
@@ -50,8 +50,8 @@ const Profile = () => {
   if (loadingUpdateProfile) return <div>Loading...</div>;
   return (
     <section className="flex flex-col h-screen items-center justify-center overflow-hidden bg-slate-500">
-      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2 ">
-        update your credentials
+      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-4 ">
+        Update Your Credentials
       </h1>
       <div className="">
         <form
@@ -89,7 +89,7 @@ const Profile = () => {
             type="submit"
             className="text-xl text-white bg-blue-700 w-[300px] mt-8 mb-4 rounded-md py-2 "
           >
-            {loadingUpdateProfile ? "Loading..." : "update"}
+            {loadingUpdateProfile ? "Loading..." : "Update"}
           </button>
         </form>
       </div>

@@ -12,7 +12,7 @@ const RequstForm = () => {
     contact: "",
     department: "",
     place: "",
-    otherPlace: "", // New field
+    otherPlace: "",
     blockNumber: "",
     biroNumber: "",
     typeOfRequest: "",
@@ -21,7 +21,7 @@ const RequstForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [createRequest, { isLoading, error }] = useCreateRequestMutation();
+  const [createRequest, { isLoading }] = useCreateRequestMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,11 +37,12 @@ const RequstForm = () => {
       typeOfRequest,
       description,
     } = formData;
+
     if (
       !username ||
       !contact ||
       !department ||
-      (!place && !otherPlace) || // At least one place must be provided
+      (!place && !otherPlace) ||
       !blockNumber ||
       !biroNumber ||
       !typeOfRequest ||
@@ -70,60 +71,58 @@ const RequstForm = () => {
 
   if (isLoading) return <div>Loading...</div>;
   return (
-    <section className="flex flex-col h-screen absolute left-0 right-0 mt-7  items-center justify-center overflow-hidden bg-slate-800">
-      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2">
+    <section className="flex flex-col min-h-screen items-center justify-center bg-slate-800 p-4">
+      <h1 className="text-2xl mb-6 text-white bg-blue-600 px-6 py-2 mt-14">
         Request Form
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center  justify-center w-[90%] max-w-4xl  rounded-lg p-8"
+        className="flex flex-col items-center justify-center w-full max-w-4xl bg-slate-900 rounded-lg p-6 md:p-8"
       >
-        <div className="grid grid-cols-2  gap-x-16 gap-y-4 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-8 md:gap-y-6 w-full">
           {/* Left Column */}
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-4">
             <input
               id="username"
               type="text"
               value={formData.username}
-              placeholder=" Requester Full Name    የጠያቂው ሙሉ ስም"
+              placeholder="Requester Full Name    የጠያቂው ሙሉ ስም"
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2  bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <input
               id="phone"
-              type="contact"
+              type="text"
               value={formData.contact}
-              placeholder="phone number  ስልክ ቁጥር "
+              placeholder="Phone Number ስልክ ቁጥር"
               onChange={(e) =>
-                setFormData({ ...formData, contact: Number(e.target.value) })
+                setFormData({ ...formData, contact: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <input
               id="department"
               type="text"
               value={formData.department}
-              placeholder="Enter Department Name የጠያቂው የዲፓርትምንት ስም"
+              placeholder="Department Name የዲፓርትምንት ስም"
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             />
-
             <select
               name="place"
               id="place"
-              type="text"
               value={formData.place}
               onChange={(e) =>
                 setFormData({ ...formData, place: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             >
-              <option value="">Select Place የዲፓርትመንት አድራሻ</option>
+              <option value="">Select Place የዲፓርትምንት አድራሻ</option>
               <option className="bg-slate-700" value="main campus">
                 Main Campus ዋናው ግቢይ
               </option>
@@ -137,96 +136,104 @@ const RequstForm = () => {
                 Diplomacy Building ዲፕሎማሲ ግቢይ
               </option>
             </select>
-
-            <input
-              id="otherPlace"
-              type="text"
-              value={formData.otherPlace}
-              placeholder="A different place የተለየ ቦታ"
-              onChange={(e) =>
-                setFormData({ ...formData, otherPlace: e.target.value })
-              }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
-            />
-            <input
-              id="blockNumber"
-              type="number"
-              value={formData.blockNumber}
-              placeholder="Enter Block Number"
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  blockNumber: Number(e.target.value),
-                })
-              }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
-            />
+            <div className="relative">
+              <input
+                id="otherPlace"
+                type="text"
+                value={formData.otherPlace}
+                placeholder="A different place የተለየ ቦታ"
+                onChange={(e) =>
+                  setFormData({ ...formData, otherPlace: e.target.value })
+                }
+                className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              />
+              <p className="text-red-500 text-sm absolute top-full mt-1">
+                Optional !
+              </p>
+            </div>
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col mr-4">
+          <div className="flex flex-col space-y-4">
             <input
-              id="biro"
-              type="number"
-              value={formData.biroNumber}
-              placeholder="Enter Biro Number"
+              id="blockNumber"
+              type="text"
+              value={formData.blockNumber}
+              placeholder="Block Number"
               onChange={(e) =>
-                setFormData({ ...formData, biroNumber: Number(e.target.value) })
+                setFormData({ ...formData, blockNumber: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+            />
+            <input
+              id="biroNumber"
+              type="text"
+              value={formData.biroNumber}
+              placeholder="Biro Number"
+              onChange={(e) =>
+                setFormData({ ...formData, biroNumber: e.target.value })
+              }
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <select
-              name="job type"
-              id="job type"
+              name="typeOfRequest"
+              id="typeOfRequest"
               value={formData.typeOfRequest}
-              placeholder="Enter Type Of Request  የሥራው አይነት"
               onChange={(e) =>
                 setFormData({ ...formData, typeOfRequest: e.target.value })
               }
-              className="max-xl:mb-4 max-xl:p-4 mb-4 p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
             >
-              <option value="">Select type of work የሥራው አይነት</option>
-              <option className="bg-slate-700" value="electric job  የኤሌክትሪክ ሥራ">
+              <option className="bg-slate-500" value="">
+                Type of Work የሥራው አይነት
+              </option>
+              <option className="bg-slate-500" value="electric job  የኤሌክትሪክ ሥራ">
                 Electrical work የኤሌክትሪክ ሥራ
               </option>
-              <option className="bg-slate-700" value="Plumbing work  የቧንቧ 	ሥራ">
-                Plumbing work የቧንቧ ሥራ
+              <option
+                className="bg-slate-500"
+                value="    Plumbing work የቧንቧ ሥራ"
+              >
+                {" "}
+                Plumbing work የቧንቧ ሥራ{" "}
               </option>
-              <option className="bg-slate-700" value="Carpenter's work የአናፂ ስራ">
+              <option
+                className="bg-slate-500"
+                value=" Carpenter's work የአናፂ ሥራ"
+              >
+                {" "}
                 Carpenter&apos;s work የአናፂ ሥራ
               </option>
-              <option className="bg-slate-700" value="Iron worker የብረት ሥራ">
+              <option className="bg-slate-500" value="Iron worker የብረት ሥራ">
+                {" "}
                 Iron worker የብረት ሥራ
               </option>
-              <option className="bg-slate-700" value="Painter የቀለም ሥራ">
+              <option className="bg-slate-500" value="Paint job የቀለም ሥራ">
                 Paint job የቀለም ሥራ
               </option>
               <option
-                className="bg-slate-700"
-                value="Construction work የግንብ ሥራ"
+                className="bg-slate-500"
+                value=" Construction work የግንብ ሥራ"
               >
+                {" "}
                 Construction work የግንብ ሥራ
               </option>
             </select>
             <textarea
-              id="description "
-              type="text"
+              id="description"
               value={formData.description}
-              placeholder="Enter Description ስለ ሥራው ዝርዝር መግለጫ "
+              placeholder="Description"
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="h-[300px] p-2 bg-transparent border border-white text-white rounded-xl"
+              className="w-full h-36 p-3 bg-transparent border border-white text-white rounded-lg"
             />
-            <p className="text-red-500 2xl text-center">
-              {error?.data?.message}
-            </p>
           </div>
         </div>
 
         <button
           type="submit"
-          className="text-xl text-white bg-blue-700 w-[300px] mt-8 rounded-md py-2"
+          className="w-full max-w-sm mt-6 py-3 text-white bg-blue-700 hover:bg-blue-800 rounded-lg"
         >
           {isLoading ? "Loading..." : "Submit"}
         </button>

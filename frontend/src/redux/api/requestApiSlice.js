@@ -39,7 +39,7 @@ export const requestApiSlice = apiSlice.injectEndpoints({
     }),
 
     getLimitOfRequests: builder.query({
-      query: () => `${REQUESTS_URL}/get-limit-of-requests`,
+      query: () => `get-limit-of-requests`,
       providesTags: ["Requests"],
     }),
     markRequestsSeen: builder.mutation({

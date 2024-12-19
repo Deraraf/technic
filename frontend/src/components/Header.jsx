@@ -25,16 +25,17 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      await logout().unwrap();
-      dispatch(clearUserInfo());
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error logging out");
+    if (window.confirm("Are you sure you want to logout?")) {
+      try {
+        await logout().unwrap();
+        dispatch(clearUserInfo());
+        navigate("/login");
+      } catch (error) {
+        console.log(error);
+        toast.error("Error logging out");
+      }
     }
   };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       const sidebar = document.getElementById("sidebar");
@@ -58,13 +59,13 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-blue-500 text-white py-1 shadow-md fixed w-full z-50">
+      <header className="bg-blue-500 text-white py-1 flex  items-center shadow-md fixed w-full z-50">
         <div className="container mx-auto flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold">
             <img src={image} alt="logo" width={50} height={50} />
           </Link>
 
-          <nav className="flex items-center space-x-4">
+          <nav className="sm:flex sm:items-center sm:space-x-4 hidden">
             <Link to="/" className="hover:underline">
               Home
             </Link>
@@ -84,22 +85,28 @@ const Header = () => {
                 </Link>
 
                 <div className="flex items-center space-x-4">
-                  <button className="rounded-full bg-blue-700 text-white text-center w-20 h-12 hover:bg-blue-800">
-                    <p className="text-center">{userInfo.username}</p>
+                  {/* Username Button */}
+                  <button className="rounded-full bg-blue-700 text-white text-center px-4 py-4 hover:bg-blue-800">
+                    <Link to="/profile" className="hover:underline">
+                      {userInfo?.username}
+                    </Link>
                   </button>
+                  {/* Logout Button */}
                   <button
-                    className="block w-full px-2  hover:bg-blue-700"
+                    className="block px-2 py-2 bg-blue-500 rounded hover:bg-blue-700 text-white"
                     onClick={handleLogout}
                   >
                     Logout
                   </button>
                 </div>
-                <button onClick={toggleSidebar} className="text-2xl">
-                  <MdOutlineMenu />
-                </button>
               </>
             )}
           </nav>
+        </div>
+        <div className="">
+          <button onClick={toggleSidebar} className="text-2xl mr-8">
+            <MdOutlineMenu />
+          </button>
         </div>
       </header>
 

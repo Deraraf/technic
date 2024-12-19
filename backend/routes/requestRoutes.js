@@ -11,7 +11,6 @@ import {
   getRecentRequests,
   markRequestSeenById,
   getEquipment,
-  getLimitOfRequests,
 } from "../controllers/requestController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
@@ -20,10 +19,7 @@ router
   .post(authenticate, createRequest)
   .get(authenticate, autorizedAdmin, getAllRequests);
 
-router
-  .route("/recent-requests")
-  .get(authenticate, autorizedAdmin, getRecentRequests);
-router.route("/get-limit-of-requests").get(getLimitOfRequests);
+router.route("/recent-requests").get(authenticate, getRecentRequests);
 router
   .route("/:id/mark-seen")
   .put(authenticate, autorizedAdmin, markRequestSeenById);

@@ -17,6 +17,8 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import RequstForm from "./pages/requests/RequstForm";
 import RecentRequest from "./pages/admin/RecentRequest";
 import EquipementList from "./pages/admin/EquipementList";
+import ViewWorkersPage from "./pages/User/WorkersPage";
+import WorkerDetails from "./pages/User/DetailWorkersPage";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route element={<ProtectRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/request" element={<RequstForm />} />
+          <Route path="/worker-page" element={<ViewWorkersPage />} />
+          <Route path="/worker-page/:id" element={<WorkerDetails />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoutes />}>

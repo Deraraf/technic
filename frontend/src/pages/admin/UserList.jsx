@@ -24,7 +24,7 @@ const UserList = () => {
   const deleteHandler = async (id) => {
     try {
       const res = await deleteUser(id);
-      console.log(res);
+
       toast.success(`User ${res.data.username} deleted successfully`);
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ const UserList = () => {
         username: editableName,
         email: editableEmail,
       });
-      console.log(res.data.username);
+
       setEditableId("");
       toast.success(`User ${res.data.username} updated successfully`);
     } catch (error) {

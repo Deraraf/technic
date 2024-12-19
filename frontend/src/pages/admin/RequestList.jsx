@@ -45,6 +45,7 @@ const RequestList = () => {
   const [markRequestsSeen] = useMarkRequestsSeenMutation();
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [equipmentToShow, setEquipmentToShow] = useState(null);
+  const [visibleRequests, setVisibleRequests] = useState(2);
 
   const handleRequestSeen = async (id) => {
     try {
@@ -66,6 +67,17 @@ const RequestList = () => {
     }
   };
   if (isLoading) return <div>Loading...</div>;
+
+  const paginationPage = requests?.slice(0, visibleRequests);
+  const hasMoreRequests = visibleRequests < (requests?.length || 0);
+
+  const handleSeeMore = () => {
+    setVisibleRequests((prev) => prev + 2);
+  };
+
+  const handleViewLess = () => {
+    setVisibleRequests((prev) => Math.max(prev - 2, 2));
+  };
 
   return (
     <div className="flex flex-col items-center h-screen bg-slate-500">
@@ -91,7 +103,7 @@ const RequestList = () => {
             </tr>
           </thead>
           <tbody>
-            {requests?.map((request) => (
+            {paginationPage?.map((request) => (
               <tr key={request._id} className="border-t border-gray-300">
                 <td className="px-4 py-2 text-left">{request.username}</td>
                 <td className="px-4 py-2 text-left">{request.contact}</td>
@@ -162,6 +174,24 @@ const RequestList = () => {
             ))}
           </tbody>
         </table>
+        <div className="mt-4 flex space-x-4 ml-8">
+          {hasMoreRequests && (
+            <button
+              onClick={handleSeeMore}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            >
+              See More
+            </button>
+          )}
+          {visibleRequests > 2 && (
+            <button
+              onClick={handleViewLess}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+            >
+              View Less
+            </button>
+          )}
+        </div>
       </div>
       {selectedRequest && (
         <UpdateRequestModal

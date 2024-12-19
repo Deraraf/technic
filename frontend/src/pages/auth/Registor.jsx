@@ -14,6 +14,7 @@ const Registor = () => {
   const { search } = useLocation();
 
   const { userInfo } = useSelector((state) => state.auth);
+  console.log(userInfo?.username);
 
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
@@ -44,7 +45,9 @@ const Registor = () => {
       if (res.error) {
         return toast.error(res.error?.data?.message);
       }
-      dispatch(setUserInfo({ ...res }));
+
+      const { data } = res;
+      dispatch(setUserInfo({ ...data }));
       console.log(res);
       navigate(redirect);
       toast.success("registered successfully");

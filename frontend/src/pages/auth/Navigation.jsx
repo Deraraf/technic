@@ -9,112 +9,103 @@ const Navigation = ({ closeSidebar }) => {
   const { data: recentRequests } = useGetRecentRequestsQuery();
 
   return (
-    <div className="flex flex-col justify-center w-full items-center space-y-4">
-      <button
-        onClick={closeSidebar}
-        className="self-end text-xl text-white rounded-[50%] w-8 mr-2 mt-2 h-8 bg-slate-950 hover:text-gray-400"
-      >
-        X
-      </button>
-      <Link
-        to="/"
-        className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
-      >
-        Home
-      </Link>
-      <Link
-        onClick={closeSidebar}
-        to="/request"
-        className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
-      >
-        Request form
-      </Link>
-      {/* Add more links as needed */}
+    <>
+      {userInfo && (
+        <div className="flex flex-col items-center w-full px-4 py-4 space-y-6">
+          {/* Close Button */}
+          <button
+            onClick={closeSidebar}
+            className="self-end text-xl text-white rounded-full w-8 h-8 bg-slate-950 hover:text-gray-400"
+          >
+            X
+          </button>
 
-      <div
-        className={`absolute items-center space-y-8 text-white w-full ml-8 pb-4  rounded-md shadow-xl ${
-          userInfo?.isAdmin ? "top-96" : "top-80"
-        }`}
-      >
-        {userInfo?.isAdmin ? (
-          <>
-            <div className="flex items-center space-x-4">
-              <Link
-                to="/admin/recent-requests"
-                className="hover:underline"
-                onClick={closeSidebar}
-              >
-                <div className="relative flex items-center">
-                  <FaBell className="text-2xl" />
+          {/* Links */}
+          <div className="flex flex-col items-center w-full space-y-6 mb-8">
+            <Link
+              to="/"
+              className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+              onClick={closeSidebar}
+            >
+              Home
+            </Link>
+            <Link
+              to="/request"
+              className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs "
+              onClick={closeSidebar}
+            >
+              Request Form
+            </Link>
+          </div>
+
+          {/* Admin/Other Links */}
+          <div className="flex flex-col items-center w-full space-y-8">
+            {userInfo?.isAdmin ? (
+              <>
+                <Link
+                  to="/admin/recent-requests"
+                  className="flex items-center space-x-2 text-sm lg:text-base text-center"
+                  onClick={closeSidebar}
+                >
+                  <FaBell className="text-xl" />
                   {recentRequests?.length > 0 && (
-                    <span className="absolute top-0 right-0 bg-red-600 text-green-700 rounded-full text-xs px-1">
+                    <span className="bg-red-600 text-white rounded-full text-xs px-2">
                       {recentRequests?.length}
                     </span>
                   )}
-                </div>
-              </Link>
-            </div>
-            <div className="mt-8">
-              <Link
-                onClick={closeSidebar}
-                to="/profile"
-                className="hover:bg-slate-950 bg-slate-900  pr-32 pt-3 pb-3 pl-4 rounded-lg  "
-              >
-                profile
-              </Link>
-            </div>
-            <div className="mt-8">
-              <Link
-                onClick={closeSidebar}
-                to="/admin/userlist"
-                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
-              >
-                UsersList
-              </Link>
-            </div>
-            <div>
-              <Link
-                onClick={closeSidebar}
-                to="/admin/requestlist"
-                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
-              >
-                RequestsList
-              </Link>
-            </div>
-            <div>
-              <Link
-                onClick={closeSidebar}
-                to="/admin/equipmentlist"
-                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
-              >
-                Equipement List
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            <div>
-              <Link
-                onClick={closeSidebar}
-                to="/profile"
-                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
-              >
-                profile
-              </Link>
-            </div>
-            <div>
-              <Link
-                onClick={closeSidebar}
-                to="/logout"
-                className="hover:bg-slate-950 bg-slate-900 pr-32 pt-3 pb-3 pl-4 rounded-lg"
-              >
-                Logout
-              </Link>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+                  <span>Recent Requests</span>
+                </Link>
+                <Link
+                  to="/profile"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/admin/userlist"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  User List
+                </Link>
+                <Link
+                  to="/admin/requestlist"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  Request List
+                </Link>
+                <Link
+                  to="/admin/equipmentlist"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  Equipment List
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/profile"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/logout"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  onClick={closeSidebar}
+                >
+                  Logout
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
