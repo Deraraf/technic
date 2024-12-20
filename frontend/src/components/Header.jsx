@@ -86,7 +86,7 @@ const Header = () => {
 
                 <div className="flex items-center space-x-4">
                   {/* Username Button */}
-                  <button className="rounded-full bg-blue-700 text-white text-center px-4 py-4 hover:bg-blue-800">
+                  <button className="rounded-full bg-blue-700 text-white text-center px-2 py-2 hover:bg-blue-800">
                     <Link to="/profile" className="hover:underline">
                       {userInfo?.username}
                     </Link>

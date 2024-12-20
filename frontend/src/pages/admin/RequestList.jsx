@@ -82,7 +82,7 @@ const RequestList = () => {
   return (
     <div className="flex flex-col items-center h-screen bg-slate-500">
       <h1 className="text-2xl mt-16">Requests List</h1>
-      <div className="mt-8 w-full overflow-x-auto">
+      <div className="mt-8 pb-36 w-full overflow-x-auto">
         <table className="table-auto w-full border-collapse border border-slate-400">
           <thead className="bg-gray-800 text-white">
             <tr>

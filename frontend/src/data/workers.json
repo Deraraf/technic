@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "John Doe",
+    "category": "Electric",
+    "image": "/images/john.jpg",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "category": "Sanitary",
+    "image": "/images/jane.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "3",
+    "name": "Mike Johnson",
+    "category": "Carpentry",
+    "image": "/images/mike.jpg",
+    "description": "Professional carpenter with expertise in custom furniture."
+  }
+]
