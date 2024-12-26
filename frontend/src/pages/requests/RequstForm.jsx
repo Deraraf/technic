@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addRecentRequest } from "../../redux/features/request/recentRequestsSlice";
-
 import { useCreateRequestMutation } from "../../redux/api/requestApiSlice";
 
 const RequstForm = () => {
@@ -42,13 +41,14 @@ const RequstForm = () => {
       !username ||
       !contact ||
       !department ||
-      (!place && !otherPlace) ||
+      !place ||
+      !otherPlace ||
       !blockNumber ||
       !biroNumber ||
       !typeOfRequest ||
       !description
     ) {
-      return toast.error("Please fill all the inputs.");
+      return toast.error("Please fill All Requird Inputs.");
     }
 
     try {
@@ -71,18 +71,18 @@ const RequstForm = () => {
 
   if (isLoading) return <div>Loading...</div>;
   return (
-    <section className="flex flex-col min-h-screen items-center justify-center bg-slate-800 p-4">
-      <h1 className="text-2xl mb-6 text-white bg-blue-600 px-6 py-2 mt-14">
+    <section className="flex flex-col min-h-screen items-center justify-center bg-slate-800 p-4 md:p-8">
+      <h1 className="text-2xl mb-6 text-white bg-blue-600 px-8 py-4 mt-14  text-center sm:text-left">
         Request Form
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center w-full max-w-4xl bg-slate-900 rounded-lg p-6 md:p-8"
+        className="flex flex-col items-center justify-center w-full max-w-4xl bg-slate-950 rounded-lg p-4 md:p-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-8 md:gap-y-6 w-full">
           {/* Left Column */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 md:space-y-6">
             <input
               id="username"
               type="text"
@@ -91,7 +91,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <input
               id="phone"
@@ -101,7 +101,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, contact: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <input
               id="department"
@@ -111,7 +111,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <select
               name="place"
@@ -120,9 +120,9 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, place: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             >
-              <option value="">Select Place የዲፓርትምንት አድራሻ</option>
+              <option value="">Select Place የዲፓርትመንት አድራሻ</option>
               <option className="bg-slate-700" value="main campus">
                 Main Campus ዋናው ግቢይ
               </option>
@@ -133,7 +133,7 @@ const RequstForm = () => {
                 Abay Campus አባይ ግቢይ
               </option>
               <option className="bg-slate-700" value="diplomacy building">
-                Diplomacy Building ዲፕሎማሲ ግቢይ
+                Diplomacy Building ዲፕሎማሲ ህንፃ
               </option>
             </select>
             <div className="relative">
@@ -141,20 +141,17 @@ const RequstForm = () => {
                 id="otherPlace"
                 type="text"
                 value={formData.otherPlace}
-                placeholder="A different place የተለየ ቦታ"
+                placeholder="A different place የተለየ ቦታ  ( Optional )"
                 onChange={(e) =>
                   setFormData({ ...formData, otherPlace: e.target.value })
                 }
-                className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+                className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
               />
-              <p className="text-red-500 text-sm absolute top-full mt-1">
-                Optional !
-              </p>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 md:space-y-6">
             <input
               id="blockNumber"
               type="text"
@@ -163,7 +160,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, blockNumber: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <input
               id="biroNumber"
@@ -173,7 +170,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, biroNumber: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
             <select
               name="typeOfRequest"
@@ -182,7 +179,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, typeOfRequest: e.target.value })
               }
-              className="w-full p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             >
               <option className="bg-slate-500" value="">
                 Type of Work የሥራው አይነት
@@ -226,7 +223,7 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full h-36 p-3 bg-transparent border border-white text-white rounded-lg"
+              className="w-full h-24 md:h-36 p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
             />
           </div>
         </div>

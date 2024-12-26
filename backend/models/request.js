@@ -27,6 +27,7 @@ const requestSchema = new mongoose.Schema(
       },
     ],
     systemNumber: { type: Number },
+    professional: [{ type: String }],
   },
   { timestamps: true }
 );

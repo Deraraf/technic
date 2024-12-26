@@ -5,11 +5,11 @@ import {
   useGetProfileUserQuery,
 } from "../../redux/api/userApiSlice";
 import { setUserInfo } from "../../redux/features/auth/authSlice";
-
 import { toast } from "react-toastify";
 
 const Profile = () => {
   const [username, setUsername] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -17,10 +17,13 @@ const Profile = () => {
   const { data: profileUser } = useGetProfileUserQuery();
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
+
   useEffect(() => {
+    console.log("profileUser in useEffect:", profileUser);
     if (profileUser) {
-      setUsername(profileUser.username);
-      setEmail(profileUser.email);
+      setUsername(profileUser.username || "");
+      setLastName(profileUser.lastName || "");
+      setEmail(profileUser.email || "");
     }
   }, [profileUser]);
 
@@ -28,26 +31,44 @@ const Profile = () => {
     e.preventDefault();
 
     try {
-      const res = await updateProfile({
+      console.log("Data sent to updateProfile:", {
         username,
+        lastName,
         email,
         password,
       });
-
-      if (res.error) {
-        return toast.error(res.error?.data?.message);
+      const res = await updateProfile({
+        username,
+        lastName,
+        email,
+        password,
+      });
+      console.log("update profile res:", res);
+      if (res?.error) {
+        return toast.error(res?.error?.data?.message);
       }
-      dispatch(setUserInfo({ ...res }));
-      setUsername("");
-      setEmail("");
+
+      if (res?.data?.message) {
+        toast.info(res?.data?.message);
+      } else {
+        dispatch(setUserInfo({ ...res.data }));
+        //Update local storage
+        localStorage.setItem("userInfo", JSON.stringify(res.data));
+        toast.success(`${res?.data?.username} updated successfully`);
+        //Update local state
+        setUsername(res.data.username);
+        setLastName(res.data.lastName);
+        setEmail(res.data.email);
+      }
+
       setPassword("");
-      toast.success(`${res.data.username} updated successfully`);
     } catch (error) {
       console.log(error);
     }
   };
 
   if (loadingUpdateProfile) return <div>Loading...</div>;
+
   return (
     <section className="flex flex-col h-screen items-center justify-center overflow-hidden bg-slate-500">
       <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-4 ">
@@ -66,6 +87,15 @@ const Profile = () => {
             placeholder="username"
             onChange={(e) => setUsername(e.target.value)}
             className="mb-4 p-2 w-[400px] mt-8 bg-transparent border border-white text-white rounded-xl  "
+          />
+          <input
+            autoComplete="true"
+            id="lastName"
+            type="text"
+            value={lastName}
+            placeholder="last name"
+            onChange={(e) => setLastName(e.target.value)}
+            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl  "
           />
           <input
             autoComplete="true"

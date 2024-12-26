@@ -1,23 +1,142 @@
 [
   {
     "id": "1",
-    "name": "John Doe",
+    "name": "Eli abebe",
     "category": "Electric",
-    "image": "/images/john.jpg",
+    "image": "eli.png",
     "description": "An experienced electrician specializing in residential wiring."
   },
   {
     "id": "2",
-    "name": "Jane Smith",
-    "category": "Sanitary",
-    "image": "/images/jane.jpg",
-    "description": "Expert in sanitary work, plumbing repairs, and installations."
+    "name": "Fetene ladenkelet",
+    "category": "Electric",
+    "image": "fetene.png",
+    "description": "An experienced electrician specializing in residential wiring."
   },
   {
     "id": "3",
-    "name": "Mike Johnson",
-    "category": "Carpentry",
-    "image": "/images/mike.jpg",
+    "name": "Girma Shiferaw",
+    "category": "Electric",
+    "image": "girma.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "4",
+    "name": "Jelalu cherinet",
+    "category": "Electric",
+    "image": "jelalu.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "5",
+    "name": "Shimeles Bekele",
+    "category": "Electric",
+    "image": "shimeles.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "6",
+    "name": "Fasil Getachew",
+    "category": "Electric",
+    "image": "fasil.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "7",
+    "name": "Berhanu Tesfaye",
+    "category": "Electric",
+    "image": "berhanu.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "8",
+    "name": "Abraham Shuramo",
+    "category": "Electric",
+    "image": "abraham.png",
+    "description": "An experienced electrician specializing in residential wiring."
+  },
+  {
+    "id": "9",
+    "name": "Solomon Tsehay",
+    "category": "Sanitary",
+    "image": "solomon.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "10",
+    "name": "Biresaw Getahun",
+    "category": "Sanitary",
+    "image": "biresaw.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "11",
+    "name": "Belay Endager",
+    "category": "Sanitary",
+    "image": "belay.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "12",
+    "name": "Tesfaye Berehan",
+    "category": "Construction",
+    "image": "tesfaye.jpg",
+    "description": "Professional Construction with expertise in custom furniture."
+  },
+  {
+    "id": "13",
+    "name": "Tesfaye Mulat",
+    "category": "Construction ",
+    "image": "tesfaye.jpg",
+    "description": "Professional Construction with expertise in custom furniture."
+  },
+  {
+    "id": "14",
+    "name": "Sihay Tesfaye",
+    "category": "Construction",
+    "image": "sisay.jpg",
+    "description": "Professional Construction with expertise in custom furniture."
+  },
+  {
+    "id": "15",
+    "name": "Solomon Berehan",
+    "category": "Construction",
+    "image": "solomon.jpg",
+    "description": "Professional Construction with expertise in custom furniture."
+  },
+  {
+    "id": "16",
+    "name": "Fikiru mengesha",
+    "category": "carpenter",
+    "image": "fikiru.jpg",
+    "description": "Professional carpenter with expertise in custom furniture."
+  },
+  {
+    "id": "17",
+    "name": "Desalegn Zewdie",
+    "category": "carpenter",
+    "image": "mike.jpg",
+    "description": "Professional carpenter with expertise in custom furniture."
+  },
+  {
+    "id": "18",
+    "name": "Demise Kassie",
+    "category": "Carpenter",
+    "image": "demise.jpg",
+    "description": "Professional carpenter with expertise in custom furniture."
+  },
+  {
+    "id": "19",
+    "name": "",
+    "category": "Carpenter",
+    "image": "mike.jpg",
+    "description": "Professional carpenter with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "",
+    "category": "Construction",
+    "image": "mike.jpg",
     "description": "Professional carpenter with expertise in custom furniture."
   }
 ]

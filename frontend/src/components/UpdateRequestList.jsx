@@ -17,6 +17,9 @@ const UpdateRequestModal = ({ request, onClose }) => {
     description: request.description || "",
     systemNumber: request.systemNumber || "",
   });
+  const [professionals, setProfessionals] = useState(
+    request.professional || []
+  );
 
   const [equipmentList, setEquipmentList] = useState(request.equipment || []);
 
@@ -42,13 +45,26 @@ const UpdateRequestModal = ({ request, onClose }) => {
     const updatedList = equipmentList.filter((_, i) => i !== index);
     setEquipmentList(updatedList);
   };
+  const handleAddProfessional = () => {
+    setProfessionals([...professionals, ""]);
+  };
+  const handleRemoveProfessional = (index) => {
+    const updatedProfessionals = professionals.filter((_, i) => i !== index);
+    setProfessionals(updatedProfessionals);
+  };
+  const handleProfessionalChange = (index, value) => {
+    const updatedProfessionals = [...professionals];
+    updatedProfessionals[index] = value;
+    setProfessionals(updatedProfessionals);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const updatedRequest = {
         ...formData,
-        equipment: equipmentList, // Add equipment array to the payload
+        equipment: equipmentList,
+        professional: professionals,
       };
       await updateRequest({
         id: request._id,
@@ -134,7 +150,34 @@ const UpdateRequestModal = ({ request, onClose }) => {
           >
             Add Equipment
           </button>
-
+          <h3 className="text-lg font-semibold mt-4 mb-2">Professionals</h3>
+          {professionals.map((professional, index) => (
+            <div key={index} className="mb-4 flex items-center">
+              <input
+                type="text"
+                placeholder="Professional Name"
+                value={professional}
+                onChange={(e) =>
+                  handleProfessionalChange(index, e.target.value)
+                }
+                className="w-full border rounded p-2 mr-2"
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveProfessional(index)}
+                className="bg-red-500 text-white px-2 py-1 rounded"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddProfessional}
+            className="bg-green-500 text-white px-4 py-2 rounded mb-4"
+          >
+            Add Professional
+          </button>
           <div className="flex justify-end mt-4">
             <button
               type="button"

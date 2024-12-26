@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 const Registor = () => {
   const [username, setUsername] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { search } = useLocation();
@@ -36,6 +37,7 @@ const Registor = () => {
     try {
       const res = await register({
         username,
+        lastName,
         email,
         password,
       });
@@ -74,6 +76,13 @@ const Registor = () => {
             placeholder="username"
             onChange={(e) => setUsername(e.target.value)}
             className="mb-4 p-2 w-[400px] mt-8 bg-transparent border border-white text-white rounded-xl  "
+          />
+          <input
+            type="text"
+            value={lastName}
+            placeholder="last name"
+            onChange={(e) => setLastName(e.target.value)}
+            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl  "
           />
           <input
             type="email"

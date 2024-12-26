@@ -84,6 +84,7 @@ const updateRequestById = async (req, res) => {
     description,
     equipment,
     systemNumber,
+    professional,
   } = req.body;
 
   try {
@@ -101,6 +102,10 @@ const updateRequestById = async (req, res) => {
         request.equipment = equipment;
       }
       if (systemNumber) request.systemNumber = systemNumber;
+      if (professional && Array.isArray(professional)) {
+        // Added validation to check if professional is an array
+        request.professional = professional;
+      }
       await request.save();
       res.status(200).json(request);
     } else {

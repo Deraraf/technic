@@ -1,10 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import workerData from "../../data/workers.json";
-
+import PropTypes from "prop-types";
 const WorkersPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
+
+  const images = import.meta.glob("../../images/*");
+
+  const getImagePath = async (imageName) => {
+    const imagePath = `../../images/${imageName}`;
+    if (images[imagePath]) {
+      const module = await images[imagePath]();
+      return module.default || module; // Return the resolved URL of the image
+    }
+    return null; // Return null if image is not found
+  };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === selectedCategory ? null : category); // Toggle selected category
@@ -14,72 +25,69 @@ const WorkersPage = () => {
     navigate(`/worker-page/${id}`);
   };
 
+  const WorkerCard = ({ worker, onClick }) => {
+    const [imageSrc, setImageSrc] = useState(null);
+
+    useEffect(() => {
+      const loadImage = async () => {
+        const src = await getImagePath(worker.image);
+        setImageSrc(src);
+      };
+      loadImage();
+    }, [worker.image]);
+
+    return (
+      <div
+        className="bg-gray-50 p-4 rounded-lg shadow hover:shadow-lg transition cursor-pointer"
+        onClick={onClick}
+      >
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={worker.name}
+            className="w-full  object-cover rounded-lg mb-3"
+          />
+        ) : (
+          <div className="w-full h-24 bg-gray-300 rounded-lg mb-3" />
+        )}
+        <h3 className="text-gray-800 font-medium text-sm text-center">
+          {worker.name}
+        </h3>
+      </div>
+    );
+  };
+
+  WorkerCard.propTypes = {
+    worker: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired,
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-8 ">
+    <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6 mt-16">
         Workers by Category
       </h1>
       <div className="flex justify-center flex-wrap gap-4 mb-6">
-        <button
-          onClick={() => handleCategoryClick("Electric")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Electric"
-              ? "bg-blue-700"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
-          Electric Workers
-        </button>
-        <button
-          onClick={() => handleCategoryClick("Sanitary")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Sanitary"
-              ? "bg-green-700"
-              : "bg-green-500 hover:bg-green-600"
-          }`}
-        >
-          Sanitary Workers
-        </button>
-        <button
-          onClick={() => handleCategoryClick("Carpentry")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Carpentry"
-              ? "bg-yellow-700"
-              : "bg-yellow-500 hover:bg-yellow-600"
-          }`}
-        >
-          Carpentry Workers
-        </button>
-        <button
-          onClick={() => handleCategoryClick("Painter")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Painter"
-              ? "bg-pink-600"
-              : "bg-pink-700 hover:bg-pink-800"
-          }`}
-        >
-          Painter Workers
-        </button>
-        <button
-          onClick={() => handleCategoryClick("Iron")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Painter"
-              ? "bg-teal-500"
-              : "bg-teal-500 hover:bg-teal-600"
-          }`}
-        >
-          Iron Workers
-        </button>
-        <button
-          onClick={() => handleCategoryClick("Construction")}
-          className={`px-6 py-2 text-white rounded-lg transition ${
-            selectedCategory === "Painter"
-              ? "bg-violet-600"
-              : "bg-violet-600 hover:bg-violet-800"
-          }`}
-        >
-          Construction Workers
-        </button>
+        {[
+          "Electric",
+          "Sanitary",
+          "Carpentry",
+          "Painter",
+          "Iron",
+          "Construction",
+        ].map((category) => (
+          <button
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className={`px-6 py-2 text-white rounded-lg transition ${
+              selectedCategory === category
+                ? "bg-blue-700"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
+          >
+            {`${category} Workers`}
+          </button>
+        ))}
       </div>
 
       {selectedCategory && (
@@ -93,20 +101,11 @@ const WorkersPage = () => {
               {workerData
                 .filter((worker) => worker.category === selectedCategory)
                 .map((worker) => (
-                  <div
+                  <WorkerCard
                     key={worker.id}
-                    className="bg-gray-50 p-4 rounded-lg shadow hover:shadow-lg transition cursor-pointer"
+                    worker={worker}
                     onClick={() => handleWorkerClick(worker.id)}
-                  >
-                    <img
-                      src={worker.image}
-                      alt={worker.name}
-                      className="w-full h-24 object-cover rounded-lg mb-3"
-                    />
-                    <h3 className="text-gray-800 font-medium text-sm text-center">
-                      {worker.name}
-                    </h3>
-                  </div>
+                  />
                 ))}
             </div>
           ) : (

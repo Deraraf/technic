@@ -5,39 +5,7 @@ import { toast } from "react-toastify";
 import { useMarkRequestsSeenMutation } from "../../redux/api/requestApiSlice";
 import { useState } from "react";
 import UpdateRequestModal from "../../components/UpdateRequestList";
-import PropTypes from "prop-types";
-
-const EquipmentModal = ({ equipment, onClose }) => {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Equipment Details</h2>
-        {equipment.length > 0 ? (
-          <ul className="list-disc pl-5 space-y-2">
-            {equipment.map((item, index) => (
-              <li key={index}>
-                <strong>{item.name}</strong> - {item.quantity} - ({item.status})
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No equipment added for this request.</p>
-        )}
-        <button
-          onClick={onClose}
-          className="mt-4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  );
-};
-
-EquipmentModal.propTypes = {
-  equipment: PropTypes.array.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+import EquipmentModal from "../../components/EquipmentModal";
 
 const RequestList = () => {
   const { data: requests, isLoading } = useGetRequestsQuery();
@@ -56,7 +24,6 @@ const RequestList = () => {
   };
 
   const deleteHandler = async (id) => {
-    // "are you sure you want to delete this request?"
     if (window.confirm("Are you sure you want to delete this request?")) {
       try {
         const res = await deleteRequest(id);

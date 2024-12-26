@@ -25,18 +25,22 @@ const Homepage = () => {
     <div className="bg-gray-100">
       {/* Hero Section */}
       <section className="text-center py-12 bg-blue-100">
-        <h1 className="text-4xl font-bold text-blue-600 mb-4 mt-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 mt-3">
           Streamline Maintenance Requests with Ease
         </h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 px-4 sm:px-0">
           Submit and manage all your maintenance requests in one place.
         </p>
-        <div className="space-x-4">
-          <button className="bg-blue-600 text-white px-6 py-3 rounded">
-            <Link to="/request">Submit a Request</Link>
+        <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex ml-8 mr-8 flex-col sm:flex-row justify-center items-center">
+          <button className="bg-blue-600 text-white px-6 py-3 rounded w-full sm:w-auto">
+            <Link to="/request" className="block">
+              Submit a Request
+            </Link>
           </button>
-          <button className="bg-gray-700 text-white px-6 py-3 rounded">
-            <Link to={"/worker-page"}> View Workers Page</Link>
+          <button className="bg-gray-700 text-white px-6 py-3 rounded w-full sm:w-auto">
+            <Link to={"/worker-page"} className="block">
+              View Workers Page
+            </Link>
           </button>
         </div>
       </section>

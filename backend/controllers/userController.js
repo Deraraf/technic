@@ -8,38 +8,45 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const createUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, lastName, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: "Please fill all the inputs." });
-  }
+  console.log("Request Body:", req.body); // Log the request body
 
-  const userExists = await User.findOne({ email });
-  if (userExists)
-    return res
-      .status(400)
-      .json({ message: "User already exists", success: false });
-
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const newUser = new User({ username, email, password: hashedPassword });
-
-  try {
-    await newUser.save();
-    createToken(res, newUser._id);
-
-    res.status(201).json({
-      _id: newUser._id,
-      username: newUser.username,
-      email: newUser.email,
-      isAdmin: newUser.isAdmin,
-      success: true,
-      message: "user created successfully",
-    });
-  } catch (error) {
+  if (!username || !lastName || !email || !password) {
     return res
       .status(400)
       .json({ message: "Invalid user data", success: false });
+  }
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User already exists", success: false });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser = new User({
+      username,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
+    const savedUser = await newUser.save();
+    return res.status(201).json({
+      _id: savedUser._id,
+      username: savedUser.username,
+      lastName: savedUser.lastName,
+      email: savedUser.email,
+      isAdmin: savedUser.isAdmin,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error during user creation:", error);
+    return res
+      .status(500)
+      .json({ message: "Error creating user", success: false });
   }
 };
 
@@ -70,6 +77,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       _id: user._id,
       username: user.username,
+      lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
       success: true,
@@ -87,13 +95,15 @@ const logoutUser = async (req, res) => {
 
 const getCurrentUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).select("-password");
+    console.log("user:", user);
     if (user) {
       return res.status(200).json({
         _id: user._id,
         username: user.username,
+        lastName: user.lastName,
         email: user.email,
-        success: true,
+        isAdmin: user.isAdmin,
       });
     } else {
       return res
@@ -106,40 +116,78 @@ const getCurrentUserProfile = async (req, res) => {
       .json({ message: "Error getting user profile", success: false });
   }
 };
+
 const updateUserProfile = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, lastName, email, password } = req.body;
 
   try {
-    if (!username && !email && !password) {
-      return res.status(400).json({ message: "Please fill all the inputs." });
-    }
+    console.log("Updating user profile:", req.user._id, req.body);
     const user = await User.findById(req.user._id);
-    if (user) {
-      if (username) {
-        user.username = username;
+
+    if (!user) {
+      console.log("User not found");
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    let update = false;
+
+    if (username && username !== user.username) {
+      const existingUser = await User.findOne({ username });
+      if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+        return res
+          .status(400)
+          .json({ message: "Username already taken", success: false });
       }
-      if (email) {
-        user.email = email;
-      }
-      if (password) {
+      console.log("Updating username");
+      user.username = username;
+      update = true;
+    }
+
+    if (lastName && lastName !== user.lastName) {
+      console.log("Updating lastName");
+      user.lastName = lastName;
+      update = true;
+    }
+
+    if (email && email !== user.email) {
+      console.log("Updating email");
+      user.email = email;
+      update = true;
+    }
+
+    if (password) {
+      if (password !== "") {
+        console.log("Updating password");
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         user.password = hashedPassword;
+        update = true;
       }
-      await user.save();
+    }
+
+    if (!update) {
+      console.log("No changes were made");
       return res.status(200).json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        isAdmin: user.isAdmin,
+        message: "No changes were made",
         success: true,
       });
-    } else {
-      return res
-        .status(401)
-        .json({ message: "user not found", success: false });
     }
+
+    console.log("Saving user");
+    await user.save();
+    console.log("User saved successfully", user);
+    return res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      lastName: user.lastName,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      success: true,
+    });
   } catch (error) {
+    console.error("Error in updateUserProfile:", error);
     return res
       .status(500)
       .json({ message: "Error updating user profile", success: false });
@@ -193,11 +241,14 @@ const getUserById = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const user = await User.findById(req.params.id);
-  const { username, email, isAdmin } = req.body;
+  const { username, email, lastName, isAdmin } = req.body;
 
   if (user) {
     if (username) {
       user.username = username || user.username;
+    }
+    if (lastName) {
+      user.lastName = lastName || user.lastName;
     }
     if (email) {
       user.email = email || user.email;
@@ -211,6 +262,7 @@ const updateUserById = async (req, res) => {
     return res.json({
       _id: updatedUser._id,
       username: updatedUser.username,
+      lastName: updatedUser.lastName,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
     });
