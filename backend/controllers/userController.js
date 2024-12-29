@@ -96,7 +96,7 @@ const logoutUser = async (req, res) => {
 const getCurrentUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
-    console.log("user:", user);
+
     if (user) {
       return res.status(200).json({
         _id: user._id,
@@ -196,7 +196,8 @@ const updateUserProfile = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().sort({ createdAt: -1 });
+
     return res.status(200).json(users);
   } catch (error) {
     return res

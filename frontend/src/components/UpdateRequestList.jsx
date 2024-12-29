@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useUpdateRequestMutation } from "../redux/api/requestApiSlice";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const UpdateRequestModal = ({ request, onClose }) => {
   const [updateRequest] = useUpdateRequestMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     username: request.username || "",
@@ -83,25 +85,32 @@ const UpdateRequestModal = ({ request, onClose }) => {
       <div className="bg-white rounded-lg p-6 max-h-[80vh] overflow-y-auto w-full md:w-3/4 lg:w-1/2 ">
         <h2 className="text-xl font-bold mb-4">Update Request</h2>
         <form onSubmit={handleSubmit}>
-          {Object.keys(formData).map((key) => (
-            <div key={key} className="mb-4">
-              <label className="block text-sm font-medium mb-1">{key}</label>
-              <input
-                type={
-                  key === "contact" ||
-                  key === "blockNumber" ||
-                  key === "biroNumber" ||
-                  key === "systemNumber"
-                    ? "number"
-                    : "text"
-                }
-                name={key}
-                value={formData[key] || ""}
-                onChange={handleChange}
-                className="w-full border rounded p-2"
-              />
-            </div>
-          ))}
+          {Object.keys(formData).map((key) => {
+            // Skip systemNumber if user is not an admin
+            if (!userInfo?.isAdmin && key === "systemNumber") {
+              return null;
+            }
+
+            return (
+              <div key={key} className="mb-4">
+                <label className="block text-sm font-medium mb-1">{key}</label>
+                <input
+                  type={
+                    key === "contact" ||
+                    key === "blockNumber" ||
+                    key === "biroNumber" ||
+                    key === "systemNumber"
+                      ? "number"
+                      : "text"
+                  }
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  className="w-full border rounded p-2"
+                />
+              </div>
+            );
+          })}
 
           <h3 className="text-lg font-semibold mt-4 mb-2">Equipment</h3>
           {equipmentList.map((item, index) => (

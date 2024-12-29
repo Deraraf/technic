@@ -40,6 +40,7 @@ const createRequest = async (req, res) => {
     biroNumber,
     typeOfRequest,
     description,
+    user: req.user._id, // Link request to the logged-in user
   });
 
   try {
@@ -193,6 +194,19 @@ const getTotalEquipment = async (req, res) => {
   }
 };
 
+// Get user-specific requests by userId
+const getUserRequests = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const requests = await Request.find({ user: userId }); // Filter by user ID
+
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching requests" });
+  }
+};
+
 export {
   createRequest,
   getAllRequests,
@@ -203,4 +217,5 @@ export {
   markRequestSeenById,
   getEquipment,
   getTotalEquipment,
+  getUserRequests,
 };

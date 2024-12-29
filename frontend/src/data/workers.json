@@ -78,6 +78,28 @@
   },
   {
     "id": "12",
+    "name": "Abdi Mokonen",
+    "category": "Sanitary",
+    "image": "abdi.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "13",
+    "name": "Shimeles Getahun",
+    "category": "Sanitary",
+    "image": "shimeles.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+  {
+    "id": "13",
+    "name": "Masresha mkonene",
+    "category": "Sanitary",
+    "image": "masresha.jpg",
+    "description": "Expert in sanitary work, plumbing repairs, and installations."
+  },
+
+  {
+    "id": "12",
     "name": "Tesfaye Berehan",
     "category": "Construction",
     "image": "tesfaye.jpg",
@@ -105,6 +127,13 @@
     "description": "Professional Construction with expertise in custom furniture."
   },
   {
+    "id": "13",
+    "name": "Kifle Yargal",
+    "category": "carpenter",
+    "image": "shimeles.jpg",
+    "description": "Expert in carpenter work, plumbing repairs, and installations."
+  },
+  {
     "id": "16",
     "name": "Fikiru mengesha",
     "category": "carpenter",
@@ -126,17 +155,87 @@
     "description": "Professional carpenter with expertise in custom furniture."
   },
   {
-    "id": "19",
-    "name": "",
+    "id": "18",
+    "name": "zeleke Welde",
     "category": "Carpenter",
-    "image": "mike.jpg",
+    "image": "zeleke.jpg",
     "description": "Professional carpenter with expertise in custom furniture."
   },
   {
-    "id": "20",
-    "name": "",
-    "category": "Construction",
-    "image": "mike.jpg",
+    "id": "18",
+    "name": "Berhanu Mamo",
+    "category": "Carpenter",
+    "image": "berhanu.jpg",
     "description": "Professional carpenter with expertise in custom furniture."
+  },
+  {
+    "id": "19",
+    "name": "Kulich Bekele",
+    "category": "painter",
+    "image": "kulich.jpg",
+    "description": "Professional painter with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Ayalew Asfaw ",
+    "category": "painter",
+    "image": "aylalew.jpg",
+    "description": "Professional painter with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "zenebech Abera",
+    "category": "painter",
+    "image": "zenebech.jpg",
+    "description": "Professional painter with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Yohanis Siyum ",
+    "category": "generater",
+    "image": "yohanis1.jpg",
+    "description": "Professional generater with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Yohanis Derese ",
+    "category": "generater",
+    "image": "yohanis2.jpg",
+    "description": "Professional generater with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "zenebe Abera",
+    "category": "generater",
+    "image": "zenebe.jpg",
+    "description": "Professional generater with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "habtu kiros",
+    "category": "generater",
+    "image": "habtu.jpg",
+    "description": "Professional generater with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Solomon Assefa",
+    "category": "Iron",
+    "image": "solomon1.jpg",
+    "description": "Professional Iron with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Solomon Lema",
+    "category": "Iron",
+    "image": "solomon2.jpg",
+    "description": "Professional Iron with expertise in custom furniture."
+  },
+  {
+    "id": "20",
+    "name": "Alemitu Baheta",
+    "category": "storekeeper",
+    "image": "alemitu.jpg",
+    "description": "Professional storekeeper with expertise in custom furniture."
   }
 ]

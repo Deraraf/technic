@@ -73,6 +73,15 @@ export const requestApiSlice = apiSlice.injectEndpoints({
       query: () => "count-equipment",
       providesTags: ["Equipment"],
     }),
+
+    getUserRequests: builder.query({
+      query: () => ({
+        url: `${REQUESTS_URL}/user-requests`,
+        method: "GET",
+        credentials: "include", // Send cookies (for JWT)
+      }),
+      providesTags: ["Requests"],
+    }),
   }),
 });
 
@@ -89,4 +98,5 @@ export const {
   useCountPendingRequestsQuery,
   useCountCompletedRequestsQuery,
   useCountEquipmentQuery,
+  useGetUserRequestsQuery,
 } = requestApiSlice;

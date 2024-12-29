@@ -11,6 +11,7 @@ import {
   getRecentRequests,
   markRequestSeenById,
   getEquipment,
+  getUserRequests,
 } from "../controllers/requestController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
@@ -19,13 +20,16 @@ router
   .post(authenticate, createRequest)
   .get(authenticate, autorizedAdmin, getAllRequests);
 
+// Protected route to get user-specific requests
+router.route("/user-requests").get(authenticate, getUserRequests);
+
 router.route("/recent-requests").get(authenticate, getRecentRequests);
 router
   .route("/:id/mark-seen")
   .put(authenticate, autorizedAdmin, markRequestSeenById);
 router
   .route("/:id")
-  .put(authenticate, autorizedAdmin, updateRequestById)
+  .put(authenticate, updateRequestById)
   .delete(authenticate, autorizedAdmin, deleteRequestById)
   .get(authenticate, autorizedAdmin, getRequestById);
 router

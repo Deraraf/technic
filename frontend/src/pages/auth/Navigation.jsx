@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { FaBell } from "react-icons/fa";
 import { useGetRecentRequestsQuery } from "../../redux/api/requestApiSlice";
 
-const Navigation = ({ closeSidebar }) => {
+const Navigation = ({ closeSidebar, handleLogout }) => {
   const { userInfo } = useSelector((state) => state.auth);
   const { data: recentRequests } = useGetRecentRequestsQuery();
 
@@ -83,6 +83,13 @@ const Navigation = ({ closeSidebar }) => {
                 >
                   Equipment List
                 </Link>
+                <Link
+                  to="/logout"
+                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Link>
               </>
             ) : (
               <>
@@ -111,6 +118,7 @@ const Navigation = ({ closeSidebar }) => {
 
 Navigation.propTypes = {
   closeSidebar: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Navigation;

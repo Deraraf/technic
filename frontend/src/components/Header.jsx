@@ -60,56 +60,60 @@ const Header = () => {
   return (
     <>
       <header className="bg-blue-500 text-white py-1 flex  items-center shadow-md fixed w-full z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold">
-            <img src={image} alt="logo" width={50} height={50} />
-          </Link>
-
-          <nav className="sm:flex sm:items-center sm:space-x-4 hidden">
-            <Link to="/" className="hover:underline">
-              Home
+        <div className="flex justify-between mx-auto w-full items-center">
+          <div className="ml-20">
+            <Link to="/" className="text-2xl font-bold">
+              <img src={image} alt="logo" width={50} height={50} />
             </Link>
-            {!userInfo ? (
-              <>
-                <Link to="/login" className="hover:underline">
-                  Login
-                </Link>
-                <Link to="/register" className="hover:underline">
-                  Register
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/request" className="hover:underline">
-                  Request form
-                </Link>
+          </div>
+          <div className=" flex items-center justify-between">
+            <nav className="sm:flex sm:items-center sm:space-x-4 mr-10 hidden">
+              <Link to="/" className="hover:underline">
+                Home
+              </Link>
+              {!userInfo ? (
+                <>
+                  <Link to="/login" className="hover:underline">
+                    Login
+                  </Link>
+                  <Link to="/register" className="hover:underline">
+                    Register
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/request" className="hover:underline">
+                    Request form
+                  </Link>
 
-                <div className="flex items-center space-x-4">
-                  {/* Username Button */}
-                  <button className="rounded-full bg-blue-700 text-white text-center px-4 py-2 hover:bg-blue-800">
-                    <Link to="/profile" className="hover:underline">
-                      {/* Render the First spealing Caps */}
-                      <p className="text-2xl font-bold">
-                        {userInfo?.username?.charAt(0)?.toUpperCase()}
-                      </p>
-                    </Link>
-                  </button>
-                  {/* Logout Button */}
                   <button
                     className="block px-2 py-2 bg-blue-500 rounded hover:bg-blue-700 text-white"
                     onClick={handleLogout}
                   >
                     Logout
                   </button>
-                </div>
-              </>
+                </>
+              )}
+            </nav>
+
+            {userInfo ? (
+              <button className="rounded-full bg-blue-700 text-white text-center px-4 py-2 mr-10 hover:bg-blue-800">
+                <Link to="/profile" className="hover:underline">
+                  {/* Render the First spealing Caps */}
+                  <p className="text-2xl font-bold">
+                    {userInfo?.username?.charAt(0)?.toUpperCase()}
+                  </p>
+                </Link>
+              </button>
+            ) : (
+              <></>
             )}
-          </nav>
-        </div>
-        <div className="">
-          <button onClick={toggleSidebar} className="text-2xl mr-8">
-            <MdOutlineMenu />
-          </button>
+            <div className="">
+              <button onClick={toggleSidebar} className="text-2xl mr-8">
+                <MdOutlineMenu />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -120,7 +124,10 @@ const Header = () => {
             id="sidebar"
             className="fixed top-[58px] left-0 h-[100vh] pl-2 w-[35%] sm:w-[15%] bg-black text-white shadow-lg z-40"
           >
-            <Navigation closeSidebar={closeSidebar} />
+            <Navigation
+              closeSidebar={closeSidebar}
+              handleLogout={handleLogout}
+            />
           </div>
 
           {/* Overlay */}

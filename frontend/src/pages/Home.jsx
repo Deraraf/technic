@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useCountTotalRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountPendingRequestsQuery } from "../redux/api/requestApiSlice";
 import { useCountCompletedRequestsQuery } from "../redux/api/requestApiSlice";
@@ -5,6 +6,7 @@ import { useCountEquipmentQuery } from "../redux/api/requestApiSlice";
 import { useGetLimitOfRequestsQuery } from "../redux/api/requestApiSlice";
 import { Link } from "react-router-dom";
 const Homepage = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   const { data: totalRequests } = useCountTotalRequestsQuery();
   const { data: pendingRequests } = useCountPendingRequestsQuery();
   const { data: completedRequests } = useCountCompletedRequestsQuery();
@@ -20,6 +22,10 @@ const Homepage = () => {
     (acc, curr) => acc + curr,
     0
   );
+
+  const getLinkPath = () => {
+    return userInfo?.isAdmin ? "/admin/requestlist" : "/user-requests";
+  };
 
   return (
     <div className="bg-gray-100">
@@ -107,10 +113,10 @@ const Homepage = () => {
             </tbody>
           </table>
         </div>
-        <div className="text-right mt-4">
-          <button className="text-blue-600 hover:underline">
-            View All Requests
-          </button>
+        <div className="text-right mt-2 mb-8">
+          <Link to={getLinkPath()} className="text-blue-600 hover:underline">
+            {userInfo?.isAdmin ? "View All Requests" : "View your Requests"}
+          </Link>
         </div>
       </section>
 

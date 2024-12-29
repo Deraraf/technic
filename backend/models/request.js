@@ -28,7 +28,13 @@ const requestSchema = new mongoose.Schema(
     ],
     systemNumber: { type: Number },
     professional: [{ type: String }],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
+
   { timestamps: true }
 );
 

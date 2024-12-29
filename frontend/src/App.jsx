@@ -19,6 +19,7 @@ import RecentRequest from "./pages/admin/RecentRequest";
 import EquipementList from "./pages/admin/EquipementList";
 import ViewWorkersPage from "./pages/User/WorkersPage";
 import WorkerDetails from "./pages/User/DetailWorkersPage";
+import UserRequests from "./pages/User/UserRequests";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/request" element={<RequstForm />} />
           <Route path="/worker-page" element={<ViewWorkersPage />} />
           <Route path="/worker-page/:id" element={<WorkerDetails />} />
+          <Route path="/user-requests" element={<UserRequests />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoutes />}>
