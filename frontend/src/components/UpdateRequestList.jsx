@@ -48,7 +48,7 @@ const UpdateRequestModal = ({ request, onClose }) => {
     setEquipmentList(updatedList);
   };
   const handleAddProfessional = () => {
-    setProfessionals([...professionals, ""]);
+    setProfessionals([...professionals, { name: "" }]);
   };
   const handleRemoveProfessional = (index) => {
     const updatedProfessionals = professionals.filter((_, i) => i !== index);
@@ -56,7 +56,7 @@ const UpdateRequestModal = ({ request, onClose }) => {
   };
   const handleProfessionalChange = (index, value) => {
     const updatedProfessionals = [...professionals];
-    updatedProfessionals[index] = value;
+    updatedProfessionals[index].name = value; // Update the 'name' field
     setProfessionals(updatedProfessionals);
   };
 
@@ -66,7 +66,7 @@ const UpdateRequestModal = ({ request, onClose }) => {
       const updatedRequest = {
         ...formData,
         equipment: equipmentList,
-        professional: professionals,
+        professional: professionals, // This will be an array of objects
       };
       await updateRequest({
         id: request._id,
@@ -165,7 +165,7 @@ const UpdateRequestModal = ({ request, onClose }) => {
               <input
                 type="text"
                 placeholder="Professional Name"
-                value={professional}
+                value={professional.name} // Update to access 'name'
                 onChange={(e) =>
                   handleProfessionalChange(index, e.target.value)
                 }
@@ -180,6 +180,7 @@ const UpdateRequestModal = ({ request, onClose }) => {
               </button>
             </div>
           ))}
+
           <button
             type="button"
             onClick={handleAddProfessional}

@@ -26,8 +26,14 @@ const requestSchema = new mongoose.Schema(
         status: { type: String, default: "Used" }, // Optional status
       },
     ],
+    professional: [
+      {
+        name: { type: String },
+        role: { type: String },
+      },
+    ],
     systemNumber: { type: Number },
-    professional: [{ type: String }],
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

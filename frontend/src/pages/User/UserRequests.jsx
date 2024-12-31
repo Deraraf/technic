@@ -9,8 +9,10 @@ const UserRequests = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [equipmentToShow, setEquipmentToShow] = useState(null);
   const [visibleRequests, setVisibleRequests] = useState(2);
+  const [professionalToShow, setProfessionalToShow] = useState([]);
 
   const { data: requests, isLoading } = useGetUserRequestsQuery();
+  console.log(requests);
 
   const paginationPage = requests?.slice(0, visibleRequests);
   const hasMoreRequests = visibleRequests < (requests?.length || 0);
@@ -21,6 +23,10 @@ const UserRequests = () => {
 
   const handleViewLess = () => {
     setVisibleRequests((prev) => Math.max(prev - 2, 2));
+  };
+  const handleViewEquipment = (request) => {
+    setEquipmentToShow(request.equipment);
+    setProfessionalToShow(request.professional); // Pass professionals for the selected request
   };
 
   isLoading ? <div>Loading...</div> : null;
@@ -74,7 +80,7 @@ const UserRequests = () => {
                 <td className="px-4 py-2 text-left">
                   {request.equipment?.length > 0 ? (
                     <button
-                      onClick={() => setEquipmentToShow(request.equipment)}
+                      onClick={() => handleViewEquipment(request)}
                       className="text-sm bg-green-500 hover:bg-green-700 ml-8 text-white px-4 py-2 rounded"
                     >
                       View
@@ -121,9 +127,10 @@ const UserRequests = () => {
           onClose={() => setSelectedRequest(null)}
         />
       )}
-      {equipmentToShow && (
+      {Array.isArray(equipmentToShow) && Array.isArray(professionalToShow) && (
         <EquipmentModal
           equipment={equipmentToShow}
+          professional={professionalToShow}
           onClose={() => setEquipmentToShow(null)}
         />
       )}

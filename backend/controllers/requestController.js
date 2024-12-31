@@ -69,7 +69,7 @@ const getRequestById = async (req, res) => {
       res.status(401).json({ message: "request not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting request" });
+    res.status(500).json({ message: "Error getting request", error });
   }
 };
 
@@ -99,20 +99,42 @@ const updateRequestById = async (req, res) => {
       if (department) request.department = department;
       if (contact) request.contact = contact;
       if (description) request.description = description;
+
+      // Handle equipment
       if (equipment && Array.isArray(equipment)) {
         request.equipment = equipment;
       }
-      if (systemNumber) request.systemNumber = systemNumber;
-      if (professional && Array.isArray(professional)) {
-        // Added validation to check if professional is an array
-        request.professional = professional;
+
+      // Handle professional (Convert string to array of objects)
+      if (professional) {
+        if (typeof professional === "string") {
+          request.professional = [{ name: professional }];
+        } else if (Array.isArray(professional)) {
+          const isValidProfessionals = professional.every(
+            (prof) => typeof prof.name === "string"
+          );
+          if (!isValidProfessionals) {
+            return res
+              .status(400)
+              .json({ message: "Invalid professional input" });
+          }
+          request.professional = professional;
+        } else {
+          return res
+            .status(400)
+            .json({ message: "Invalid format for professional input" });
+        }
       }
+
+      if (systemNumber) request.systemNumber = systemNumber;
+
       await request.save();
       res.status(200).json(request);
     } else {
       res.status(404).json({ message: "Request not found" });
     }
   } catch (error) {
+    console.error("Error updating request:", error);
     res.status(500).json({ message: "Error updating request", error });
   }
 };

@@ -13,6 +13,7 @@ const RequestList = () => {
   const [markRequestsSeen] = useMarkRequestsSeenMutation();
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [equipmentToShow, setEquipmentToShow] = useState(null);
+  const [professionalToShow, setProfessionalToShow] = useState([]);
   const [visibleRequests, setVisibleRequests] = useState(2);
 
   const handleRequestSeen = async (id) => {
@@ -37,6 +38,7 @@ const RequestList = () => {
 
   const paginationPage = requests?.slice(0, visibleRequests);
   const hasMoreRequests = visibleRequests < (requests?.length || 0);
+  console.log(paginationPage);
 
   const handleSeeMore = () => {
     setVisibleRequests((prev) => prev + 2);
@@ -44,6 +46,12 @@ const RequestList = () => {
 
   const handleViewLess = () => {
     setVisibleRequests((prev) => Math.max(prev - 2, 2));
+  };
+  const handleViewEquipment = (request) => {
+    setEquipmentToShow(request.equipment);
+    setProfessionalToShow(request.professional || []); // Ensure professionalToShow is updated
+    console.log(request.equipment);
+    console.log(request.professional);
   };
 
   return (
@@ -97,7 +105,7 @@ const RequestList = () => {
                 <td className="px-4 py-2 text-left">
                   {request.equipment?.length > 0 ? (
                     <button
-                      onClick={() => setEquipmentToShow(request.equipment)}
+                      onClick={() => handleViewEquipment(request)}
                       className="text-sm bg-green-500 hover:bg-green-700 ml-8 text-white px-4 py-2 rounded"
                     >
                       View
@@ -169,6 +177,7 @@ const RequestList = () => {
       {equipmentToShow && (
         <EquipmentModal
           equipment={equipmentToShow}
+          professional={professionalToShow}
           onClose={() => setEquipmentToShow(null)}
         />
       )}
