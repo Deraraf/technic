@@ -41,20 +41,18 @@ const RequstForm = () => {
       !username ||
       !contact ||
       !department ||
-      !place ||
-      !otherPlace ||
+      (!place && !otherPlace) ||
       !blockNumber ||
       !biroNumber ||
       !typeOfRequest ||
       !description
     ) {
-      return toast.error("Please fill All Requird Inputs.");
+      return toast.error("Please fill at least one place input");
     }
 
     try {
       const finalPlace = otherPlace || place;
       const requestPayload = { ...formData, place: finalPlace };
-
       const res = await createRequest(requestPayload);
 
       dispatch(addRecentRequest(res.data));
@@ -72,7 +70,7 @@ const RequstForm = () => {
   if (isLoading) return <div>Loading...</div>;
   return (
     <section className="flex flex-col min-h-screen items-center justify-center bg-slate-800 p-4 md:p-8">
-      <h1 className="text-2xl mb-6 text-white bg-blue-600 px-8 py-4 mt-14  text-center sm:text-left">
+      <h1 className="text-2xl mb-6 text-white bg-blue-600 px-8 py-4 mt-14 text-center sm:text-left">
         Request Form
       </h1>
 
@@ -91,7 +89,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
             <input
               id="phone"
@@ -101,7 +104,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, contact: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
             <input
               id="department"
@@ -111,18 +119,32 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
             <select
               name="place"
               id="place"
               value={formData.place}
-              onChange={(e) =>
-                setFormData({ ...formData, place: e.target.value })
-              }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  place: e.target.value,
+                  otherPlace: "",
+                });
+              }}
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             >
-              <option value="">Select Place የዲፓርትመንት አድራሻ</option>
+              <option value="">Select Place የዲፓርትምንት አድራሻ</option>
               <option className="bg-slate-700" value="main campus">
                 Main Campus ዋናው ግቢይ
               </option>
@@ -143,9 +165,18 @@ const RequstForm = () => {
                 value={formData.otherPlace}
                 placeholder="A different place የተለየ ቦታ  ( Optional )"
                 onChange={(e) =>
-                  setFormData({ ...formData, otherPlace: e.target.value })
+                  setFormData({
+                    ...formData,
+                    otherPlace: e.target.value,
+                    place: "",
+                  })
                 }
-                className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+                onFocus={(e) => e.target.classList.add("placeholder-fade")}
+                onBlur={(e) => {
+                  if (!e.target.value)
+                    e.target.classList.remove("placeholder-fade");
+                }}
+                className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
               />
             </div>
           </div>
@@ -160,7 +191,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, blockNumber: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
             <input
               id="biroNumber"
@@ -170,7 +206,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, biroNumber: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
             <select
               name="typeOfRequest"
@@ -179,7 +220,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, typeOfRequest: e.target.value })
               }
-              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             >
               <option className="bg-slate-500" value="">
                 Type of Work የሥራው አይነት
@@ -223,7 +269,12 @@ const RequstForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full h-24 md:h-36 p-2 md:p-3 bg-transparent border border-white text-white rounded-lg"
+              onFocus={(e) => e.target.classList.add("placeholder-fade")}
+              onBlur={(e) => {
+                if (!e.target.value)
+                  e.target.classList.remove("placeholder-fade");
+              }}
+              className="w-full h-24 md:h-36 p-2 md:p-3 bg-transparent border border-white text-white rounded-lg transition-all duration-200"
             />
           </div>
         </div>

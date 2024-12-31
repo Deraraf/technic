@@ -1,5 +1,6 @@
 import { useGetRecentRequestsQuery } from "../../redux/api/requestApiSlice";
 import { useMarkRequestsSeenMutation } from "../../redux/api/requestApiSlice";
+
 const RecentRequests = () => {
   const { data: requests } = useGetRecentRequestsQuery();
   const [markRequestsSeen] = useMarkRequestsSeenMutation();
@@ -13,20 +14,20 @@ const RecentRequests = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-slate-500 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-500 p-4">
       <h1 className="text-xl font-bold mb-4">Recent Requests</h1>
       {requests?.length === 0 ? (
-        <p>No recent requests.</p>
+        <p className="text-center">No recent requests.</p>
       ) : (
-        <ul className="space-y-4 flex flex-wrap items-center justify-center">
+        <ul className="space-y-1 flex flex-wrap items-center justify-center w-full max-w-12xl">
           {requests?.map((request, index) => (
             <div
               key={index}
-              className="p-4 border rounded shadow relative w-96 mr-8 "
+              className="p-2 border rounded shadow relative  sm:w-80 md:mr-8"
             >
               <button
                 onClick={() => handleRequestSeen(request._id)}
-                className={`absolute top-2 right-2 text-sm rounded px-2 py-1 ${
+                className={`absolute top-2 right-2 text-sm rounded px-1 py-1 ${
                   request.seenByAdmins
                     ? "bg-blue-600 text-white"
                     : "bg-red-600 text-white"
@@ -35,7 +36,7 @@ const RecentRequests = () => {
                 {request.seenByAdmins ? "Seen" : "Unseen"}
               </button>
 
-              <li className="space-y-2">
+              <li className="space-y-1">
                 <p>
                   <strong>Username:</strong> {request.username}
                 </p>
@@ -63,11 +64,11 @@ const RecentRequests = () => {
                 <p>
                   <strong>Description:</strong> {request.description}
                 </p>
-                <p>
-                  <strong className="ml-16">Status:</strong>{" "}
+                <p className="relative">
+                  <strong className="inline-block ml-4">Status:</strong>
                   <strong
                     className={
-                      "absolute  right-[50%] text-sm rounded px-2 py-1 " +
+                      "absolute right-[10%] top-1/2 transform -translate-y-1/2 text-sm rounded px-2 py-1 " +
                       `${request.seenByAdmins ? "bg-teal-600" : "bg-rose-500"}`
                     }
                   >
