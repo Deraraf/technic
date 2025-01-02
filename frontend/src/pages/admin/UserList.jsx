@@ -63,12 +63,19 @@ const UserList = () => {
     setVisibleUsers((prev) => prev + 2);
   };
 
+  const handleViewLess = () => {
+    if (visibleUsers > 2) {
+      setVisibleUsers((prev) => Math.max(prev - 2, 2));
+    }
+  };
+
   if (isLoadingUpdate) return <div>Loading...</div>;
   return (
     <div className="flex flex-col items-center min-h-screen bg-slate-500 p-4">
       <h1 className="text-2xl mb-4">Users List</h1>
-      <div className="overflow-x-auto w-full ">
-        <table className="table-auto w-full  ">
+      {/* Table (Hidden on Small Screens) */}
+      <div className="overflow-x-auto w-full sm:block hidden">
+        <table className="table-auto w-full">
           <thead>
             <tr className="text-left">
               <th className="px-2 py-2 md:px-4">ID</th>
@@ -81,7 +88,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {paginationPage?.map((user) => (
-              <tr key={user._id} className="border-b  border-slate-400">
+              <tr key={user._id} className="border-b border-slate-400">
                 <td className="px-2 py-2 md:px-4">{user._id}</td>
                 <td className="px-2 py-2 md:px-4">
                   <div className="flex items-center justify-between">
@@ -114,7 +121,6 @@ const UserList = () => {
                           }
                           className="ml-2 bg-blue-500 hover:bg-blue-700  text-white  rounded-md px-2 py-1"
                         >
-                          {" "}
                           <FaEdit />
                         </button>
                       </div>
@@ -220,6 +226,54 @@ const UserList = () => {
           </tbody>
         </table>
       </div>
+      {/* Vertical Layout for small screens */}
+      <div className="sm:hidden w-full flex flex-col space-y-4 mt-8">
+        {paginationPage?.map((user) => (
+          <div
+            key={user._id}
+            className="bg-white border border-gray-300 rounded-md p-4"
+          >
+            <p>
+              <strong>ID:</strong> {user._id}
+            </p>
+            <p>
+              <strong>Username:</strong> {user.username}
+            </p>
+            <p>
+              <strong>Last Name:</strong> {user.lastName}
+            </p>
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p>
+              <strong>Admin:</strong>{" "}
+              {user.isAdmin ? (
+                <FaCheck className="text-green-500 inline-block" />
+              ) : (
+                <FaTimes className="text-red-500 inline-block" />
+              )}
+            </p>
+            <div className="flex space-x-2 mt-2">
+              <button
+                onClick={() =>
+                  toggleEdit(user._id, user.username, user.lastName, user.email)
+                }
+                className="bg-blue-500 hover:bg-blue-700 text-white rounded px-2 py-1"
+              >
+                Edit
+              </button>
+              {!user.isAdmin && (
+                <button
+                  onClick={() => deleteHandler(user._id)}
+                  className="bg-red-500 hover:bg-red-700 text-white rounded px-2 py-1"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {hasMoreUsers && (
         <button
@@ -227,6 +281,14 @@ const UserList = () => {
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
         >
           See More
+        </button>
+      )}
+      {visibleUsers > 2 && (
+        <button
+          onClick={handleViewLess}
+          className="bg-red-500 text-white px-4 py-2  mt-4 rounded-lg"
+        >
+          View Less
         </button>
       )}
     </div>

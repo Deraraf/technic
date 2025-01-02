@@ -219,9 +219,11 @@ const getTotalEquipment = async (req, res) => {
 // Get user-specific requests by userId
 const getUserRequests = async (req, res) => {
   const userId = req.user._id;
+  console.log(req.user);
 
   try {
     const requests = await Request.find({ user: userId }); // Filter by user ID
+    console.log(requests);
 
     res.status(200).json(requests);
   } catch (error) {

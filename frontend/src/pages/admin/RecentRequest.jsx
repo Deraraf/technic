@@ -14,12 +14,12 @@ const RecentRequests = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-500 p-4">
+    <div className="flex flex-col items-center min-h-screen bg-slate-500 p-4 ">
       <h1 className="text-xl font-bold mb-4">Recent Requests</h1>
       {requests?.length === 0 ? (
         <p className="text-center">No recent requests.</p>
       ) : (
-        <ul className="space-y-1 flex flex-wrap items-center justify-center w-full max-w-12xl">
+        <ul className="space-y-1 flex flex-wrap gap-4 items-center justify-center w-full max-w-12xl mt-4">
           {requests?.map((request, index) => (
             <div
               key={index}

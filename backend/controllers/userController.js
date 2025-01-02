@@ -125,7 +125,6 @@ const updateUserProfile = async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (!user) {
-      console.log("User not found");
       return res
         .status(404)
         .json({ message: "User not found", success: false });
@@ -146,7 +145,6 @@ const updateUserProfile = async (req, res) => {
     }
 
     if (lastName && lastName !== user.lastName) {
-      console.log("Updating lastName");
       user.lastName = lastName;
       update = true;
     }
@@ -168,16 +166,14 @@ const updateUserProfile = async (req, res) => {
     }
 
     if (!update) {
-      console.log("No changes were made");
       return res.status(200).json({
         message: "No changes were made",
         success: true,
       });
     }
 
-    console.log("Saving user");
     await user.save();
-    console.log("User saved successfully", user);
+
     return res.status(200).json({
       _id: user._id,
       username: user.username,

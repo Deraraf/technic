@@ -57,9 +57,10 @@ const RequestList = () => {
   return (
     <div className="flex flex-col items-center h-screen bg-slate-500">
       <h1 className="text-2xl mt-16">Requests List</h1>
-      <div className="mt-8 pb-36 w-full overflow-x-auto">
+      {/* Table Layout (Hidden on Small Screens) */}
+      <div className="mt-8 pb-36 w-full overflow-x-auto sm:block hidden">
         <table className="table-auto w-full border-collapse border border-slate-400">
-          <thead className="bg-gray-800 text-white">
+          <thead className=" bg-gray-800 text-white">
             <tr>
               <th className="px-4 py-2 text-left">USERNAME</th>
               <th className="px-4 py-2 text-left">CONTACT</th>
@@ -222,7 +223,7 @@ const RequestList = () => {
               <strong>Equipment:</strong>{" "}
               {request.equipment?.length > 0 ? (
                 <button
-                  onClick={() => setEquipmentToShow(request.equipment)}
+                  onClick={() => handleViewEquipment(request)}
                   className="text-sm bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded"
                 >
                   View

@@ -38,9 +38,11 @@ const UpdateRequestModal = ({ request, onClose }) => {
   };
 
   const handleChangeEquipment = (index, key, value) => {
-    const updatedList = [...equipmentList];
-    updatedList[index][key] = value;
-    setEquipmentList(updatedList);
+    setEquipmentList((prevList) => {
+      const updatedList = [...prevList];
+      updatedList[index] = { ...updatedList[index], [key]: value };
+      return updatedList;
+    });
   };
 
   const handleRemoveEquipment = (index) => {
