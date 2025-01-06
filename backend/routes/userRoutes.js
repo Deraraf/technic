@@ -12,6 +12,7 @@ import {
   forgotPassword,
   resetPassword,
   totalUsers,
+  verifyEmail,
 } from "../controllers/userController.js";
 import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
@@ -23,6 +24,8 @@ router.post("/auth", loginUser);
 router.post("/logout", logoutUser);
 router.post("/forgot-password", forgotPassword);
 router.route("/reset-password/:id/:token").post(resetPassword);
+router.get("/verify-email/:id/:token", verifyEmail);
+
 router
   .route("/profile")
   .get(authenticate, getCurrentUserProfile)

@@ -20,6 +20,7 @@ import EquipementList from "./pages/admin/EquipementList";
 import ViewWorkersPage from "./pages/User/WorkersPage";
 import WorkerDetails from "./pages/User/DetailWorkersPage";
 import UserRequests from "./pages/User/UserRequests";
+import VerifyEmail from "./pages/User/VerifyEmail";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+        <Route path="/verify-email/:id/:token" element={<VerifyEmail />} />
 
         <Route element={<ProtectRoute />}>
           <Route path="/profile" element={<Profile />} />

@@ -6,11 +6,8 @@ import Jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 const createUser = async (req, res) => {
   const { username, lastName, email, password } = req.body;
-
-  console.log("Request Body:", req.body); // Log the request body
 
   if (!username || !lastName || !email || !password) {
     return res
@@ -19,34 +16,200 @@ const createUser = async (req, res) => {
   }
 
   try {
+    // Check if the email format is valid
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        message: "Invalid email format. Please check your email.",
+        success: false,
+      });
+    }
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
         .status(400)
         .json({ message: "User already exists", success: false });
     }
+
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new user with isVerified: false
     const newUser = new User({
       username,
       lastName,
       email,
       password: hashedPassword,
+      isVerified: false,
     });
     const savedUser = await newUser.save();
-    return res.status(201).json({
-      _id: savedUser._id,
-      username: savedUser.username,
-      lastName: savedUser.lastName,
-      email: savedUser.email,
-      isAdmin: savedUser.isAdmin,
-      success: true,
+
+    // Generate a verification token
+    const token = Jwt.sign({ userId: savedUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    const verificationLink = `http://localhost:5173/verify-email/${savedUser._id}/${token}`;
+
+    // Send a verification email with CSS-styled button
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.User,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+
+    const emailTemplate = `
+      <html>
+        <head> 
+          <style>
+            body {
+              font-family: 'Arial', sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 0;
+            }
+            .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 40px auto;
+              background-color: #ffffff;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+            }
+            .header {
+              background-color: #4CAF50;
+              color: white;
+              text-align: center;
+              padding: 20px;
+              font-size: 24px;
+            }
+            .content {
+              padding: 30px;
+              text-align: center;
+            }
+              .content h1 {
+              font-size: 24px;
+              color: #4CAF50;
+            }
+            .content p {
+              font-size: 16px;
+              color: #666666;
+            }
+            .button {
+              display: inline-block;
+              margin: 30px 0;
+              padding: 15px 30px;
+              font-size: 18px;
+              color: white;
+              background-color: #4CAF50;
+              text-decoration: none;
+              border-radius: 5px;
+            }
+            .footer {
+              margin-top: 40px;
+              font-size: 14px;
+              color: #FF0000;
+            }
+            .link {
+              color: #4CAF50;
+              word-wrap: break-word;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              Verify Your Email
+            </div>
+            <div class="content">
+              <h1>Hello ${username},</h1>
+              <p>Wellcome to Technic Maintainance Work Request Platform!</p>
+              <p>Thank you for registering! Please verify your email to activate your account.</p>
+              <a href="${verificationLink}" class="button">
+                Verify Email
+              </a>
+              <p>If the button above doesn't work, paste this link into your browser:</p>
+              <p>
+                <a href="${verificationLink}" class="link">${verificationLink}</a>
+              </p>
+              <p class="footer">
+                If you did not request this, please ignore this email.
+              </p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    const mailOptions = {
+      from: process.env.User,
+      to: email,
+      subject: "Verify your email",
+      html: emailTemplate,
+    };
+
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.error("Error sending verification email:", error);
+        return res.status(500).json({
+          message: "Error sending verification email",
+          success: false,
+        });
+      } else {
+        return res.status(201).json({
+          _id: savedUser._id,
+          username: savedUser.username,
+          lastName: savedUser.lastName,
+          email: savedUser.email,
+          isAdmin: savedUser.isAdmin,
+          message: "User registered successfully. Please verify your email.",
+          success: true,
+        });
+      }
     });
   } catch (error) {
     console.error("Error during user creation:", error);
     return res
       .status(500)
       .json({ message: "Error creating user", success: false });
+  }
+};
+
+export const verifyEmail = async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    const isCorrectToken = Jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!isCorrectToken) {
+      return res
+        .status(401)
+        .json({ message: "Invalid or expired token", success: false });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    // Activate user if token is valid
+    user.isVerified = true;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Email verified successfully. You can now log in.",
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error verifying email", success: false });
   }
 };
 
@@ -81,7 +244,7 @@ const loginUser = async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       success: true,
-      message: "logined successfully",
+      message: "login successfully",
     });
   } catch (error) {
     res.status(500).json({ message: "Error logging in user", success: false });

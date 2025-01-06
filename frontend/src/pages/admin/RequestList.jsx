@@ -25,7 +25,10 @@ const RequestList = () => {
   };
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure you want to delete this request?")) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this request?"
+    );
+    if (confirmed) {
       try {
         const res = await deleteRequest(id);
         toast.success(`Request ${res.data.username} deleted successfully`);
@@ -34,6 +37,7 @@ const RequestList = () => {
       }
     }
   };
+
   if (isLoading) return <div>Loading...</div>;
 
   const paginationPage = requests?.slice(0, visibleRequests);
@@ -89,7 +93,12 @@ const RequestList = () => {
                 <td className="px-8 py-2 text-left">{request.blockNumber}</td>
                 <td className="px-8 py-2 text-left">{request.biroNumber}</td>
                 <td className="px-4 py-2 text-left">{request.typeOfRequest}</td>
-                <td className="px-4 py-2 text-left">{request.description}</td>
+
+                <td className="px-4 py-2 text-left">
+                  {request.description.length > 19
+                    ? request.description.slice(0, 19) + "..."
+                    : request.description}
+                </td>
                 <td className="px-4 py-2 text-left ">
                   {
                     <p

@@ -2,7 +2,7 @@ import { useGetUserRequestsQuery } from "../../redux/api/requestApiSlice";
 import UpdateRequestModal from "../../components/UpdateRequestList";
 import EquipmentModal from "../../components/EquipmentModal";
 import { FaEdit } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UserRequests = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -10,8 +10,16 @@ const UserRequests = () => {
   const [visibleRequests, setVisibleRequests] = useState(2);
   const [professionalToShow, setProfessionalToShow] = useState([]);
 
-  const { data: requests, isLoading } = useGetUserRequestsQuery();
-  console.log(requests);
+  const {
+    data: requests,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetUserRequestsQuery();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const paginationPage = requests?.slice(0, visibleRequests);
   const hasMoreRequests = visibleRequests < (requests?.length || 0);
@@ -28,7 +36,7 @@ const UserRequests = () => {
     setProfessionalToShow(request.professional); // Pass professionals for the selected request
   };
 
-  isLoading ? <div>Loading...</div> : null;
+  if (isLoading || isFetching) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col items-center h-screen bg-slate-500">
@@ -62,7 +70,11 @@ const UserRequests = () => {
                 <td className="px-8 py-2 text-left">{request.blockNumber}</td>
                 <td className="px-8 py-2 text-left">{request.biroNumber}</td>
                 <td className="px-4 py-2 text-left">{request.typeOfRequest}</td>
-                <td className="px-4 py-2 text-left">{request.description}</td>
+                <td className="px-4 py-2 text-left">
+                  {request.description.length > 19
+                    ? request.description.slice(0, 19) + "..."
+                    : request.description}
+                </td>
                 <td className="px-4 py-2 text-left ">
                   {
                     <p
@@ -165,7 +177,10 @@ const UserRequests = () => {
               <strong>Request Type:</strong> {request.typeOfRequest}
             </p>
             <p>
-              <strong>Description:</strong> {request.description}
+              <strong>Description:</strong>{" "}
+              {request.description.length > 19
+                ? request.description.slice(0, 19) + "..."
+                : request.description}
             </p>
             <p>
               <strong>Status:</strong> {request.status}

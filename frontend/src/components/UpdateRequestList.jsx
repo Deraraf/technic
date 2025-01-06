@@ -46,15 +46,26 @@ const UpdateRequestModal = ({ request, onClose }) => {
   };
 
   const handleRemoveEquipment = (index) => {
-    const updatedList = equipmentList.filter((_, i) => i !== index);
-    setEquipmentList(updatedList);
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this equipment?"
+    );
+    if (confirmed) {
+      const updatedList = equipmentList.filter((_, i) => i !== index);
+      setEquipmentList(updatedList);
+    }
   };
+
   const handleAddProfessional = () => {
     setProfessionals([...professionals, { name: "" }]);
   };
   const handleRemoveProfessional = (index) => {
-    const updatedProfessionals = professionals.filter((_, i) => i !== index);
-    setProfessionals(updatedProfessionals);
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this professional?"
+    );
+    if (confirmed) {
+      const updatedProfessionals = professionals.filter((_, i) => i !== index);
+      setProfessionals(updatedProfessionals);
+    }
   };
   const handleProfessionalChange = (index, value) => {
     const updatedProfessionals = [...professionals];

@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRegisterMutation } from "../../redux/api/userApiSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { setUserInfo } from "../../redux/features/auth/authSlice";
+
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+
 import { toast } from "react-toastify";
 
 const Registor = () => {
@@ -14,22 +13,12 @@ const Registor = () => {
   const [password, setPassword] = useState("");
   const { search } = useLocation();
 
-  const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo?.username);
-
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [register, { isLoading }] = useRegisterMutation();
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [userInfo, navigate, redirect]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,17 +31,12 @@ const Registor = () => {
         password,
       });
 
-      console.log(res);
-
       if (res.error) {
         return toast.error(res.error?.data?.message);
       }
 
-      const { data } = res;
-      dispatch(setUserInfo({ ...data }));
-      console.log(res);
-      navigate(redirect);
-      toast.success("registered successfully");
+      toast.success("Registered successfully. Please verify your email.");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

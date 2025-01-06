@@ -34,8 +34,6 @@ const Login = () => {
 
     try {
       const res = await login({ email, password });
-      console.log(res);
-
       if (res.error) {
         return toast.error(res.error?.data?.message);
       }

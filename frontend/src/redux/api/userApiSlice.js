@@ -75,6 +75,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+
+    // for email verification
+    verifyEmail: builder.query({
+      query: (data) => ({
+        url: `${USERS_URL}/verify-email/${data.id}/${data.token}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -89,4 +98,5 @@ export const {
   useForgotPasswordMutation,
   useGetProfileUserQuery,
   useResetPasswordMutation,
+  useVerifyEmailQuery,
 } = userApiSlice;
