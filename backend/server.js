@@ -7,6 +7,7 @@ import requestRoutes from "./routes/requestRoutes.js";
 import cookieParser from "cookie-parser";
 import User from "./models/user.js";
 import Request from "./models/request.js";
+import indexRoutes from "./routes/indexRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use((err, req, res, next) => {
 
 app.use("/api/users", userRoutes);
 app.use("/api/requests", requestRoutes);
+app.use("/", indexRoutes);
 
 app.get("/test", (req, res) => {
   res.status(200).json({ message: "Basic route working!" });
