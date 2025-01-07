@@ -13,7 +13,7 @@ dotenv.config();
 
 await connectedDB();
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -129,6 +129,6 @@ app.get("/get-limit-of-requests", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
