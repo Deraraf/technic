@@ -36,7 +36,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use((req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
 });
 
 app.use((err, req, res, next) => {
