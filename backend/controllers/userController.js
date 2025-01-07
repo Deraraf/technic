@@ -51,7 +51,7 @@ const createUser = async (req, res) => {
       expiresIn: "1d",
     });
 
-    const verificationLink = `http://localhost:5173/verify-email/${savedUser._id}/${token}`;
+    const verificationLink = `https://technique-one.vercel.app/verify-email/${savedUser._id}/${token}`;
 
     // Send a verification email with CSS-styled button
     const transporter = nodemailer.createTransport({
