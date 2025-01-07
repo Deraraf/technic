@@ -172,6 +172,13 @@ const createUser = async (req, res) => {
         });
       }
     });
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error("SMTP Connection Failed:", error);
+      } else {
+        console.log("SMTP Connection Successful:", success);
+      }
+    });
   } catch (error) {
     console.error("Error during user creation:", error);
     return res
@@ -236,6 +243,12 @@ const loginUser = async (req, res) => {
         .json({ message: "Incorrect password", success: false });
     }
 
+    if (!user.isVerified) {
+      return res
+        .status(400)
+        .json({ message: "Email not verified", success: false });
+    }
+
     createToken(res, user._id);
     res.status(200).json({
       _id: user._id,
@@ -244,7 +257,7 @@ const loginUser = async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       success: true,
-      message: "login successfully",
+      message: "login successfull",
     });
   } catch (error) {
     res.status(500).json({ message: "Error logging in user", success: false });
