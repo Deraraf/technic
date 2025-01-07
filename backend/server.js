@@ -8,15 +8,10 @@ import cookieParser from "cookie-parser";
 import User from "./models/user.js";
 import Request from "./models/request.js";
 import indexRoutes from "./routes/indexRoutes.js";
-import { fileURLToPath } from "url";
-import path from "path";
 
 dotenv.config();
 
 await connectedDB();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 5000;
 
@@ -34,10 +29,6 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-
-app.use((req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
-});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
