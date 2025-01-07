@@ -62,15 +62,23 @@ const Login = () => {
           className="flex flex-col items-center justify-center w-[450px] bg-slate-800 rounded-lg"
         >
           <input
+            id="email"
+            name="email"
             type="text"
             placeholder="Email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             className="mb-4 p-3 w-[400px] bg-transparent border border-white text-white rounded-xl mt-8  "
           />
           <input
+            id="password"
+            name="password"
             type="password"
+            value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             className="p-3 w-[400px] bg-transparent border border-white text-white rounded-xl "
           />
 
