@@ -19,10 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "https://technique-one.vercel.app",
-      "https://technic.onrender.com",
-    ],
+    origin: ["https://technique-one.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
 );

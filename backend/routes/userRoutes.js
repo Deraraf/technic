@@ -18,7 +18,10 @@ import { authenticate, autorizedAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.route("/").post(createUser).get(getAllUsers);
+router
+  .route("/")
+  .post(createUser)
+  .get(authenticate, autorizedAdmin, getAllUsers);
 
 router.post("/auth", loginUser);
 router.post("/logout", logoutUser);

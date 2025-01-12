@@ -10,7 +10,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
 
   return (
     <>
-      {userInfo && (
+      {userInfo ? (
         <div className="flex flex-col items-center w-full px-4 py-4 space-y-6">
           {/* Close Button */}
           <button
@@ -111,6 +111,8 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
             )}
           </div>
         </div>
+      ) : (
+        <div className="mt-10 ml-4">Login to use the app</div>
       )}
     </>
   );
