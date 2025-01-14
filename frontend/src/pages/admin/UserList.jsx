@@ -23,12 +23,17 @@ const UserList = () => {
   }, [refetch]);
 
   const deleteHandler = async (id) => {
-    try {
-      const res = await deleteUser(id);
+    const confirmed = window.confirm(
+      "are you sure you want to delete the user"
+    );
 
-      toast.success(`User ${res.data.username} deleted successfully`);
-    } catch (error) {
-      console.log(error);
+    if (confirmed) {
+      try {
+        const res = await deleteUser(id);
+        toast.success(`User ${res.data.username} deleted successfully`);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -274,23 +279,24 @@ const UserList = () => {
           </div>
         ))}
       </div>
-
-      {hasMoreUsers && (
-        <button
-          onClick={handleSeeMore}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
-        >
-          See More
-        </button>
-      )}
-      {visibleUsers > 2 && (
-        <button
-          onClick={handleViewLess}
-          className="bg-red-500 text-white px-4 py-2  mt-4 rounded-lg"
-        >
-          View Less
-        </button>
-      )}
+      <div className="flex gap-4">
+        {hasMoreUsers && (
+          <button
+            onClick={handleSeeMore}
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+          >
+            See More
+          </button>
+        )}
+        {visibleUsers > 2 && (
+          <button
+            onClick={handleViewLess}
+            className="bg-red-500 text-white px-4 py-2  mt-4 rounded-lg"
+          >
+            View Less
+          </button>
+        )}
+      </div>
     </div>
   );
 };
