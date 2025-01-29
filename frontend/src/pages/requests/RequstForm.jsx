@@ -37,8 +37,18 @@ const RequestForm = () => {
 
   const validate = () => {
     const newErrors = {};
+
     Object.entries(formData).forEach(([key, value]) => {
-      validateField(key, value);
+      console.log(formData[key]);
+      if (key !== "otherPlace") {
+        newErrors[key] = `${key} is required`; // General error for empty fields
+      } else if (key === "description") {
+        if (value.length < 10) {
+          newErrors[key] = "Description must be at least 10 characters";
+        } else if (value.length > 200) {
+          newErrors[key] = "Description must not exceed 200 characters";
+        }
+      }
     });
 
     if (!formData.place && !formData.otherPlace) {
@@ -53,6 +63,11 @@ const RequestForm = () => {
     e.preventDefault();
     if (!validate()) {
       toast.error("Please fill all required fields");
+      // Scroll to the first invalid field
+      const firstErrorField = Object.keys(errors).find((key) => errors[key]);
+      if (firstErrorField) {
+        document.getElementById(firstErrorField)?.focus();
+      }
       return;
     }
 
@@ -74,12 +89,34 @@ const RequestForm = () => {
   };
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-    setErrors({ ...errors, [e.target.id]: "" }); // Clear error when user types
-  };
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
 
+    if (id === "otherPlace") {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        if (formData.otherPlace) {
+          delete newErrors.place;
+        }
+        return newErrors;
+      });
+    } else if (id === "place") {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        if (formData.place) {
+          delete newErrors.place;
+        }
+        return newErrors;
+      });
+    } else {
+      setErrors({ ...errors, [id]: "" }); // Clear error when user types except `otherPlace`
+    }
+  };
   const handleBlur = (e) => {
-    validateField(e.target.id, e.target.value);
+    const { id, value } = e.target;
+    if (id !== "otherPlace" || id !== "place") {
+      validateField(id, value);
+    }
   };
 
   return (
@@ -169,14 +206,8 @@ const RequestForm = () => {
               value={formData.otherPlace}
               placeholder="A different place"
               onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`w-full p-2 md:p-3 bg-transparent border ${
-                errors.otherPlace ? "border-red-500" : "border-white"
-              } text-white rounded-lg`}
+              className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg "
             />
-            {errors.otherPlace && (
-              <p className="text-red-500">{errors.otherPlace}</p>
-            )}
           </div>
           {/* Right Column */}
           <div className="flex flex-col space-y-4 md:space-y-6">
@@ -286,195 +317,3 @@ const RequestForm = () => {
 };
 
 export default RequestForm;
-
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import { useDispatch } from "react-redux";
-// import { addRecentRequest } from "../../redux/features/request/recentRequestsSlice";
-// import { useCreateRequestMutation } from "../../redux/api/requestApiSlice";
-
-// const RequestForm = () => {
-//   const [formData, setFormData] = useState({
-//     username: "",
-//     contact: "",
-//     department: "",
-//     place: "",
-//     otherPlace: "",
-//     blockNumber: "",
-//     biroNumber: "",
-//     typeOfRequest: "",
-//     description: "",
-//   });
-
-//   const [errors, setErrors] = useState({});
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const [createRequest, { isLoading }] = useCreateRequestMutation();
-
-//   const validate = () => {
-//     const newErrors = {};
-//     if (!formData.username) newErrors.username = "Username is required";
-//     if (!formData.contact) newErrors.contact = "Contact is required";
-//     if (!formData.department) newErrors.department = "Department is required";
-//     if (!formData.blockNumber)
-//       newErrors.blockNumber = "Block number is required";
-//     if (!formData.biroNumber) newErrors.biroNumber = "Biro number is required";
-//     if (!formData.typeOfRequest)
-//       newErrors.typeOfRequest = "Request type is required";
-//     if (!formData.description) {
-//       newErrors.description = "Description is required";
-//     } else if (formData.description.length < 10) {
-//       newErrors.description = "Description must be at least 10 characters";
-//     } else if (formData.description.length > 200) {
-//       newErrors.description = "Description must not exceed 200 characters";
-//     }
-//     if (!formData.place && !formData.otherPlace) {
-//       newErrors.place = "Please select a place or enter another location";
-//     }
-
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!validate()) {
-//       toast.error("Please fill all required fields");
-//       return;
-//     }
-
-//     try {
-//       const finalPlace = formData.otherPlace || formData.place;
-//       const requestPayload = { ...formData, place: finalPlace };
-//       const res = await createRequest(requestPayload);
-
-//       dispatch(addRecentRequest(res.data));
-//       if (res.error) {
-//         return toast.error(res.error?.data?.message);
-//       }
-
-//       navigate("/");
-//       toast.success("Request created successfully");
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   const handleInputChange = (e) => {
-//     setFormData({ ...formData, [e.target.id]: e.target.value });
-//     setErrors({ ...errors, [e.target.id]: "" }); // Clear error when user types
-//   };
-
-//   return (
-//     <section className="flex flex-col min-h-screen items-center justify-center bg-slate-800 p-4 md:p-8">
-//       <h1 className="text-2xl mb-6 text-white bg-blue-600 px-8 py-4 mt-14 text-center sm:text-left">
-//         Request Form
-//       </h1>
-
-//       <form
-//         onSubmit={handleSubmit}
-//         className="flex flex-col items-center justify-center w-full max-w-4xl bg-slate-950 rounded-lg p-4 md:p-8"
-//       >
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-8 md:gap-y-6 w-full">
-//           {/* Left Column */}
-//           <div className="flex flex-col space-y-4 md:space-y-6">
-//             <input
-//               id="username"
-//               type="text"
-//               value={formData.username}
-//               placeholder="Requester Full Name"
-//               onChange={handleInputChange}
-//               className={`w-full p-2 md:p-3 bg-transparent border ${
-//                 errors.username ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             />
-//             {errors.username && (
-//               <p className="text-red-500">{errors.username}</p>
-//             )}
-
-//             <input
-//               id="contact"
-//               type="text"
-//               value={formData.contact}
-//               placeholder="Phone Number"
-//               onChange={handleInputChange}
-//               className={`w-full p-2 md:p-3 bg-transparent border ${
-//                 errors.contact ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             />
-//             {errors.contact && <p className="text-red-500">{errors.contact}</p>}
-
-//             <input
-//               id="department"
-//               type="text"
-//               value={formData.department}
-//               placeholder="Department Name"
-//               onChange={handleInputChange}
-//               className={`w-full p-2 md:p-3 bg-transparent border ${
-//                 errors.department ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             />
-//             {errors.department && (
-//               <p className="text-red-500">{errors.department}</p>
-//             )}
-
-//             <select
-//               id="place"
-//               value={formData.place}
-//               onChange={handleInputChange}
-//               className={`w-full p-2 md:p-3 bg-transparent border ${
-//                 errors.place ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             >
-//               <option value="">Select Place</option>
-//               <option value="main campus">Main Campus</option>
-//               <option value="middle campus">Middle Campus</option>
-//               <option value="abay campus">Abay Campus</option>
-//             </select>
-//             {errors.place && <p className="text-red-500">{errors.place}</p>}
-//           </div>
-
-//           {/* Right Column */}
-//           <div className="flex flex-col space-y-4 md:space-y-6">
-//             <input
-//               id="blockNumber"
-//               type="text"
-//               value={formData.blockNumber}
-//               placeholder="Block Number"
-//               onChange={handleInputChange}
-//               className={`w-full p-2 md:p-3 bg-transparent border ${
-//                 errors.blockNumber ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             />
-//             {errors.blockNumber && (
-//               <p className="text-red-500">{errors.blockNumber}</p>
-//             )}
-
-//             <textarea
-//               id="description"
-//               value={formData.description}
-//               placeholder="Description"
-//               onChange={handleInputChange}
-//               className={`w-full h-24 p-2 md:p-3 bg-transparent border ${
-//                 errors.description ? "border-red-500" : "border-white"
-//               } text-white rounded-lg`}
-//             />
-//             {errors.description && (
-//               <p className="text-red-500">{errors.description}</p>
-//             )}
-//           </div>
-//         </div>
-
-//         <button
-//           type="submit"
-//           className="w-full max-w-sm mt-6 py-3 text-white bg-blue-700 hover:bg-blue-800 rounded-lg"
-//         >
-//           {isLoading ? "Loading..." : "Submit"}
-//         </button>
-//       </form>
-//     </section>
-//   );
-// };
-
-// export default RequestForm;
