@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { setUserInfo } from "../../redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 import { toast } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,15 +51,16 @@ const Login = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
+
   return (
-    <section className="flex flex-col h-screen items-center justify-center  bg-slate-500">
-      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2 ">
+    <section className="flex flex-col h-screen items-center justify-center bg-slate-500 p-4">
+      <h1 className="text-2xl mb-4 text-white bg-blue-600 px-8 py-2 sm:px-16 sm:py-4 rounded-lg">
         Login
       </h1>
-      <div className="">
+      <div className="w-full max-w-md sm:max-w-lg">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center w-[450px] bg-slate-800 rounded-lg"
+          className="flex flex-col items-center justify-center w-full bg-slate-800 rounded-lg p-4"
         >
           <input
             id="email"
@@ -69,7 +70,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            className="mb-4 p-3 w-[400px] bg-transparent border border-white text-white rounded-xl mt-8  "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
           />
           <input
             id="password"
@@ -79,7 +80,7 @@ const Login = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
-            className="p-3 w-[400px] bg-transparent border border-white text-white rounded-xl "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
           />
 
           <p className="mt-4">
@@ -92,7 +93,7 @@ const Login = () => {
           </p>
           <button
             type="submit"
-            className="text-xl text-white bg-blue-700 w-[300px] mt-8 mb-4 rounded-md py-2 "
+            className="text-xl text-white bg-blue-700 w-full sm:w-[300px] mt-8 mb-4 rounded-md py-2"
           >
             Submit
           </button>

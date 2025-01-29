@@ -70,32 +70,32 @@ const Profile = () => {
   if (loadingUpdateProfile) return <div>Loading...</div>;
 
   return (
-    <section className="flex flex-col h-screen items-center justify-center overflow-hidden bg-slate-500">
-      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-4 ">
+    <section className="flex flex-col h-screen items-center justify-center bg-slate-500 p-4">
+      <h1 className="text-2xl mb-4 text-white bg-blue-600 px-8 py-2 sm:px-16 sm:py-4 rounded-lg">
         Update Your Credentials
       </h1>
-      <div className="">
+      <div className="w-full max-w-md sm:max-w-lg">
         <form
           onSubmit={handleUpdate}
-          className="flex flex-col items-center justify-center w-[450px] bg-slate-800 rounded-lg"
+          className="flex flex-col items-center justify-center w-full bg-slate-800 rounded-lg p-4"
         >
           <input
             autoComplete="true"
             id="username"
             type="text"
             value={username}
-            placeholder="username"
+            placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
-            className="mb-4 p-2 w-[400px] mt-8 bg-transparent border border-white text-white rounded-xl  "
+            className="mb-4 p-2 w-full bg-transparent border border-white text-white rounded-xl"
           />
           <input
             autoComplete="true"
             id="lastName"
             type="text"
             value={lastName}
-            placeholder="last name"
+            placeholder="Last Name"
             onChange={(e) => setLastName(e.target.value)}
-            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl  "
+            className="mb-4 p-2 w-full bg-transparent border border-white text-white rounded-xl"
           />
           <input
             autoComplete="true"
@@ -104,7 +104,7 @@ const Profile = () => {
             value={email}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
-            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl  "
+            className="mb-4 p-2 w-full bg-transparent border border-white text-white rounded-xl"
           />
           <input
             autoComplete="true"
@@ -113,11 +113,11 @@ const Profile = () => {
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
-            className="p-2 w-[400px] bg-transparent border border-white text-white rounded-xl "
+            className="mb-4 p-2 w-full bg-transparent border border-white text-white rounded-xl"
           />
           <button
             type="submit"
-            className="text-xl text-white bg-blue-700 w-[300px] mt-8 mb-4 rounded-md py-2 "
+            className="text-xl text-white bg-blue-700 w-full sm:w-[300px] mt-4 mb-4 rounded-md py-2"
           >
             {loadingUpdateProfile ? "Loading..." : "Update"}
           </button>

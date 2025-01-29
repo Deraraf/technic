@@ -71,45 +71,45 @@ const Registor = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <section className="flex flex-col h-screen items-center justify-center overflow-hidden bg-slate-500">
-      <h1 className="text-2xl mb-2 text-white bg-blue-600 px-16 py-2 ">
-        Registor
+    <section className="flex flex-col h-screen items-center justify-center bg-slate-500 p-4">
+      <h1 className="text-2xl mb-4 text-white bg-blue-600 px-8 py-2 sm:px-16 sm:py-4 rounded-lg">
+        Register
       </h1>
-      <div className="">
+      <div className="w-full max-w-md sm:max-w-lg">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center w-[450px] bg-slate-800 rounded-lg"
+          className="flex flex-col items-center justify-center w-full bg-slate-800 rounded-lg p-4"
         >
           {errors.username && (
-            <p className="text-red-500 ">{errors.username}</p>
+            <p className="text-red-500 mb-2">{errors.username}</p>
           )}
           <input
             id="username"
             name="username"
             type="text"
             value={username}
-            placeholder="username"
+            placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
             onBlur={() => handleBlur("username")}
-            className="mb-2 p-2 w-[400px] mt-4 bg-transparent border border-white text-white rounded-xl  "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
             autoComplete="username"
           />
           {errors.lastName && (
-            <p className="text-red-500 mt-4">{errors.lastName}</p>
+            <p className="text-red-500 mb-2">{errors.lastName}</p>
           )}
           <input
             id="lastName"
             name="lastName"
             type="text"
             value={lastName}
-            placeholder="last name"
+            placeholder="Last Name"
             onChange={(e) => setLastName(e.target.value)}
             onBlur={() => handleBlur("lastName")}
-            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
             autoComplete="family-name"
           />
 
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
+          {errors.email && <p className="text-red-500 mb-2">{errors.email}</p>}
           <input
             id="email"
             name="email"
@@ -118,11 +118,13 @@ const Registor = () => {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => handleBlur("email")}
-            className="mb-4 p-2 w-[400px] bg-transparent border border-white text-white rounded-xl  "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
             autoComplete="email"
           />
 
-          {errors.password && <p className="text-red-500">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-500 mb-2">{errors.password}</p>
+          )}
           <input
             id="password"
             name="password"
@@ -131,13 +133,13 @@ const Registor = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             onBlur={() => handleBlur("password")}
-            className="p-2 w-[400px] bg-transparent border border-white text-white rounded-xl "
+            className="mb-4 p-3 w-full bg-transparent border border-white text-white rounded-xl"
             autoComplete="new-password"
           />
 
           <button
             type="submit"
-            className="text-xl text-white bg-blue-700 w-[300px] mt-8 mb-4 rounded-md py-2 "
+            className="text-xl text-white bg-blue-700 w-full sm:w-[300px] mt-8 mb-4 rounded-md py-2"
           >
             {isLoading ? "Loading..." : "Submit"}
           </button>

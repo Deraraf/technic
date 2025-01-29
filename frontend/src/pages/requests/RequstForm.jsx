@@ -39,11 +39,13 @@ const RequestForm = () => {
     const newErrors = {};
 
     Object.entries(formData).forEach(([key, value]) => {
-      console.log(formData[key]);
-      if (key !== "otherPlace") {
-        newErrors[key] = `${key} is required`; // General error for empty fields
-      } else if (key === "description") {
-        if (value.length < 10) {
+      if (key !== "otherPlace" && key !== "place" && !value) {
+        newErrors[key] = `${key} is required`;
+      }
+      if (key === "description") {
+        if (!value) {
+          newErrors[key] = `${key} is required`;
+        } else if (value.length < 10) {
           newErrors[key] = "Description must be at least 10 characters";
         } else if (value.length > 200) {
           newErrors[key] = "Description must not exceed 200 characters";
@@ -92,26 +94,22 @@ const RequestForm = () => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
 
-    if (id === "otherPlace") {
-      setErrors((prevErrors) => {
-        const newErrors = { ...prevErrors };
-        if (formData.otherPlace) {
-          delete newErrors.place;
-        }
-        return newErrors;
-      });
-    } else if (id === "place") {
-      setErrors((prevErrors) => {
-        const newErrors = { ...prevErrors };
-        if (formData.place) {
-          delete newErrors.place;
-        }
-        return newErrors;
-      });
-    } else {
-      setErrors({ ...errors, [id]: "" }); // Clear error when user types except `otherPlace`
-    }
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      if (id === "place" && value !== "") {
+        delete newErrors.place;
+      } else if (id === "otherPlace" && value !== "") {
+        delete newErrors.place;
+      }
+
+      if (newErrors[id]) {
+        delete newErrors[id];
+      }
+
+      return newErrors;
+    });
   };
+
   const handleBlur = (e) => {
     const { id, value } = e.target;
     if (id !== "otherPlace" || id !== "place") {
@@ -268,7 +266,7 @@ const RequestForm = () => {
                 value=" Carpenter's work የአናፂ ሥራ"
               >
                 {" "}
-                Carpenter&apos;s work
+                Carpenter&poas;s work
               </option>
               <option className="bg-slate-500" value="Iron worker የብረት ሥራ">
                 {" "}
