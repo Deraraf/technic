@@ -202,7 +202,7 @@ const RequestForm = () => {
               id="otherPlace"
               type="text"
               value={formData.otherPlace}
-              placeholder="A different place"
+              placeholder="A different place                              ( optional )"
               onChange={handleInputChange}
               className="w-full p-2 md:p-3 bg-transparent border border-white text-white rounded-lg "
             />
