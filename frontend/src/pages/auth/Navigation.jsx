@@ -149,8 +149,8 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
             to="/login"
             className={({ isActive }) =>
               isActive
-                ? "bg-blue-500 py-2 rounded-lg pr-20 pl-20  text-white"
-                : "border pr-20 pl-20 py-2 rounded-lg text-white"
+                ? "bg-blue-500 py-2 rounded-lg pr-8 pl-8 sm:pr-20 sm:pl-20 text-white"
+                : "border pr-8 pl-8 sm:pr-20 sm:pl-20 py-2 rounded-lg text-white"
             }
           >
             Login
@@ -159,8 +159,8 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
             to="/register"
             className={({ isActive }) =>
               isActive
-                ? "bg-blue-500 py-2 rounded-lg pr-20 pl-20  text-white"
-                : "border-1 pr-20 pl-20 py-2 rounded-lg text-white"
+                ? "bg-blue-500 py-2 rounded-lg pr-5 pl-5 sm:pr-20 sm:pl-20 text-white"
+                : "border pr-5 pl-5 sm:pr-20 sm:pl-20 py-2 rounded-lg text-white"
             }
           >
             Register
