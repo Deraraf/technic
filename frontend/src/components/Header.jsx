@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../redux/api/userApiSlice";
 import { clearUserInfo } from "../redux/features/auth/authSlice";
@@ -68,23 +68,47 @@ const Header = () => {
           </div>
           <div className=" flex items-center justify-between">
             <nav className="sm:flex sm:items-center sm:space-x-4 mr-10 hidden">
-              <Link to="/" className="hover:underline">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-black p-2 rounded-lg  text-white"
+                    : "text-white"
+                }
+              >
                 Home
-              </Link>
+              </NavLink>
               {!userInfo ? (
                 <>
-                  <Link to="/login" className="hover:underline">
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive ? "bg-black  text-white" : "text-white"
+                    }
+                  >
                     Login
-                  </Link>
-                  <Link to="/register" className="hover:underline">
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive ? "bg-black  text-white" : "text-white"
+                    }
+                  >
                     Register
-                  </Link>
+                  </NavLink>
                 </>
               ) : (
                 <>
-                  <Link to="/request" className="hover:underline">
+                  <NavLink
+                    to="/request"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-black p-2 rounded-lg  text-white"
+                        : "text-white"
+                    }
+                  >
                     Request form
-                  </Link>
+                  </NavLink>
 
                   <button
                     className="block px-2 py-2 bg-blue-500 rounded hover:bg-blue-700 text-white"

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { FaBell } from "react-icons/fa";
@@ -22,30 +22,39 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
 
           {/* Links */}
           <div className="flex flex-col items-center w-full space-y-6 mb-8">
-            <Link
+            <NavLink
               to="/"
-              className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-              onClick={closeSidebar}
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+              }
             >
               Home
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/request"
-              className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs "
-              onClick={closeSidebar}
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+              }
             >
               Request Form
-            </Link>
+            </NavLink>
           </div>
 
           {/* Admin/Other Links */}
           <div className="flex flex-col items-center w-full space-y-8">
             {userInfo?.isAdmin ? (
               <>
-                <Link
+                <NavLink
                   to="/admin/recent-requests"
-                  className="flex items-center space-x-2 text-sm lg:text-base text-center"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 flex gap-2 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg flex gap-2 text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   <FaBell className="text-xl" />
                   {recentRequests?.length > 0 && (
@@ -54,59 +63,82 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                     </span>
                   )}
                   <span>Recent Requests</span>
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/profile"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   Profile
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/admin/userlist"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   User List
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/admin/requestlist"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   Request List
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/admin/equipmentlist"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   Equipment List
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/logout"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
+                  }
                   onClick={handleLogout}
                 >
                   Logout
-                </Link>
+                </NavLink>
               </>
             ) : (
               <>
-                <Link
+                <NavLink
                   to="/profile"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  onClick={closeSidebar}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                 >
                   Profile
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/logout"
-                  className="hover:bg-slate-950 bg-slate-900 px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  }
                   onClick={closeSidebar}
                 >
                   Logout
-                </Link>
+                </NavLink>
               </>
             )}
           </div>
