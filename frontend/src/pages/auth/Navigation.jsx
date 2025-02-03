@@ -15,7 +15,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
           {/* Close Button */}
           <button
             onClick={closeSidebar}
-            className="self-end text-xl text-white rounded-full w-8 h-8 bg-slate-950 hover:text-gray-400"
+            className="self-end text-xl text-white rounded-full border w-9 h-9 bg-slate-950 hover:text-gray-400"
           >
             X
           </button>
@@ -27,7 +27,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
               }
             >
               Home
@@ -37,7 +37,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                  : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                  : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
               }
             >
               Request Form
@@ -53,7 +53,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 flex gap-2 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg flex gap-2 text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg flex gap-2 text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   <FaBell className="text-xl" />
@@ -69,7 +69,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   Profile
@@ -79,7 +79,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   User List
@@ -89,7 +89,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   Request List
@@ -99,7 +99,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 sm:py-3 py-1 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   Equipment List
@@ -109,7 +109,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs sm:hidden"
                   }
                   onClick={handleLogout}
                 >
@@ -123,7 +123,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                 >
                   Profile
@@ -133,7 +133,7 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-blue-500 text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
-                      : "text-white px-6 py-3 rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
+                      : "text-white px-6 py-3 border rounded-lg text-sm lg:text-base text-center w-full max-w-xs"
                   }
                   onClick={closeSidebar}
                 >
