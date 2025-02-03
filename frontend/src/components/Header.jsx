@@ -83,7 +83,9 @@ const Header = () => {
                   <NavLink
                     to="/login"
                     className={({ isActive }) =>
-                      isActive ? "bg-black  text-white" : "text-white"
+                      isActive
+                        ? "bg-black p-2 rounded-lg  text-white"
+                        : "text-white"
                     }
                   >
                     Login
@@ -91,7 +93,9 @@ const Header = () => {
                   <NavLink
                     to="/register"
                     className={({ isActive }) =>
-                      isActive ? "bg-black  text-white" : "text-white"
+                      isActive
+                        ? "bg-black p-2 rounded-lg  text-white"
+                        : "text-white"
                     }
                   >
                     Register
