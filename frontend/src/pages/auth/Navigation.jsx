@@ -144,7 +144,28 @@ const Navigation = ({ closeSidebar, handleLogout }) => {
           </div>
         </div>
       ) : (
-        <div className="mt-10 ml-4">Login to use the app</div>
+        <div className="flex flex-col gap-4 justify-center items-center mt-10 ">
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-blue-500 py-2 rounded-lg pr-20 pl-20  text-white"
+                : "border pr-20 pl-20 py-2 rounded-lg text-white"
+            }
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-blue-500 py-2 rounded-lg pr-20 pl-20  text-white"
+                : "border-1 pr-20 pl-20 py-2 rounded-lg text-white"
+            }
+          >
+            Register
+          </NavLink>
+        </div>
       )}
     </>
   );
