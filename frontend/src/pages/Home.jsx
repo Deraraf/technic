@@ -123,7 +123,7 @@ const Homepage = () => {
       {/* Footer */}
       <footer className="bg-gray-800 text-white p-4 text-center">
         <p>&copy; 2024 Technic Department. All rights reserved.</p>
-        <p>Contact: +123-456-7890 | technic@department.com</p>
+        <p>Contact: +251 966 4067 09 | technic@department.com</p>
       </footer>
     </div>
   );
